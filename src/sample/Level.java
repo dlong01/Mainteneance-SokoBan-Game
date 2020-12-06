@@ -16,6 +16,12 @@ public final class Level implements Iterable<GameObject> {
     private int numberOfDiamonds = 0;
     private Point keeperPosition = new Point(0, 0);
 
+    /**
+     *
+     * @param levelName
+     * @param levelIndex
+     * @param raw_level
+     */
     public Level(String levelName, int levelIndex, List<String> raw_level) {
         if (StartMeUp.isDebugActive()) {
             System.out.printf("[ADDING LEVEL] LEVEL [%d]: %s\n", levelIndex, levelName);
@@ -52,6 +58,10 @@ public final class Level implements Iterable<GameObject> {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     boolean isComplete() {
         int cratedDiamondsCount = 0;
         for (int row = 0; row < objectsGrid.ROWS; row++) {
@@ -65,45 +75,91 @@ public final class Level implements Iterable<GameObject> {
         return cratedDiamondsCount >= numberOfDiamonds;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     *
+     * @return
+     */
     int getIndex() {
         return index;
     }
 
+    /**
+     *
+     * @return
+     */
     Point getKeeperPosition() {
         return keeperPosition;
     }
 
+    /**
+     *
+     * @param source
+     * @param delta
+     * @return
+     */
     GameObject getTargetObject(Point source, Point delta) {
         return objectsGrid.getTargetFromSource(source, delta);
     }
 
+    /**
+     *
+     * @param p
+     * @return
+     */
     GameObject getObjectAt(Point p) {
         return objectsGrid.getGameObjectAt(p);
     }
 
+    /**
+     *
+     * @param object
+     * @param source
+     * @param delta
+     */
     void moveGameObjectBy(GameObject object, Point source, Point delta) {
         moveGameObjectTo(object, source, translatePoint(source, delta));
     }
 
+    /**
+     *
+     * @param object
+     * @param source
+     * @param destination
+     */
     public void moveGameObjectTo(GameObject object, Point source, Point destination) {
         objectsGrid.putGameObjectAt(getObjectAt(destination), source);
         objectsGrid.putGameObjectAt(object, destination);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return objectsGrid.toString();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Iterator<GameObject> iterator() {
         return new LevelIterator();
     }
 
+    /**
+     * 
+     */
     public class LevelIterator implements Iterator<GameObject> {
 
         int column = 0;

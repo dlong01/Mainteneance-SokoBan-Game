@@ -15,6 +15,10 @@ public class GameLogger extends Logger {
     private DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     private Calendar calendar = Calendar.getInstance();
 
+    /**
+     *
+     * @throws IOException
+     */
     public GameLogger() throws IOException {
         super("GameLogger", null);
 
@@ -27,18 +31,35 @@ public class GameLogger extends Logger {
         fh.setFormatter(formatter);
     }
 
+    /**
+     *
+     * @param message
+     * @return
+     */
     private String createFormattedMessage(String message) {
         return dateFormat.format(calendar.getTime()) + " -- " + message;
     }
 
+    /**
+     *
+     * @param message
+     */
     public void info(String message) {
         logger.info(createFormattedMessage(message));
     }
 
+    /**
+     *
+     * @param message
+     */
     public void warning(String message) {
         logger.warning(createFormattedMessage(message));
     }
 
+    /**
+     *
+     * @param message
+     */
     public void severe(String message) {
         logger.severe(createFormattedMessage(message));
     }

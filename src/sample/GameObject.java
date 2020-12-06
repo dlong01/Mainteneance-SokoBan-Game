@@ -11,10 +11,19 @@ public enum GameObject {
 
     private final char symbol;
 
+    /**
+     *
+     * @param symbol
+     */
     GameObject(final char symbol) {
         this.symbol = symbol;
     }
 
+    /**
+     *
+     * @param c
+     * @return
+     */
     public static GameObject fromChar(char c) {
         for (GameObject t : GameObject.values()) {
             if (Character.toUpperCase(c) == t.symbol) {
@@ -25,10 +34,18 @@ public enum GameObject {
         return WALL;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getStringSymbol() {
         return String.valueOf(symbol);
     }
 
+    /**
+     *
+     * @return
+     */
     public char getCharSymbol() {
         return symbol;
     }

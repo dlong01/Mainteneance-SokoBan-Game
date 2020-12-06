@@ -9,6 +9,10 @@ import javafx.util.Duration;
 
 class GraphicObject extends Rectangle {
 
+    /**
+     *
+     * @param obj
+     */
     GraphicObject(GameObject obj) {
         Paint color;
         switch (obj) {

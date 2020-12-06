@@ -22,6 +22,13 @@ public class StartMeUp {
     private int movesCount = 0;
     private MediaPlayer player;
 
+    /**
+     * Constructor for the game engine instanced in {@link Main#initializeGame(InputStream)}.
+     * Creates a new game logger, stores {@link StartMeUp#loadGameFile(InputStream)} in levels,
+     * calls {@link StartMeUp#getNextLevel()} and stores the return value in the currentLevel variable.
+     * @param input         The game file to be loaded
+     * @param production    Possibly a redundant parameter
+     */
     public StartMeUp(InputStream input, boolean production) {
         try {
             logger = new GameLogger();
@@ -40,18 +47,34 @@ public class StartMeUp {
         }
     }
 
+    /**
+     * Getter to retrieve the value of debug.
+     * @return  Boolean value debug
+     */
     public static boolean isDebugActive() {
         return debug;
     }
 
+    /**
+     * Getter to retrieve movesCount.
+     * @return  int value movesCount
+     */
     public int getMovesCount() {
         return movesCount;
     }
 
+    /**
+     * Getter for the mapSetName variable.
+     * @return  String value mapSetName
+     */
     public String getMapSetName() {
         return mapSetName;
     }
 
+    /**
+     * Takes keyboard input and calls {@link #move(Point)} to move the player object.
+     * @param code  key pressed by the player
+     */
     public void handleKey(KeyCode code) {
         switch (code) {
             case UP:
@@ -79,6 +102,10 @@ public class StartMeUp {
         }
     }
 
+    /**
+     * Moves the player and moves any objects that need to move as well
+     * @param delta Change in position of the player object
+     */
     public void move(Point delta) {
         if (isGameComplete()) {
             return;
@@ -139,6 +166,12 @@ public class StartMeUp {
         }
     }
 
+    /**
+     * Loads the game for the InputStream value.
+     * Assigns values to the variables that are used in other methods throughout the program.
+     * @param input File containing values of the game file
+     * @return      Game files parsed into a List that is then accessed when making changes to the game
+     */
     public List<Level> loadGameFile(InputStream input) {
         List<Level> levels = new ArrayList<>(5);
         int levelIndex = 0;
@@ -195,30 +228,52 @@ public class StartMeUp {
         return levels;
     }
 
+    /**
+     * Getter for gameComplete.
+     * @return boolean value of gameComplete
+     */
     public boolean isGameComplete() {
         return gameComplete;
     }
 
+    /**
+     *
+     * @throws LineUnavailableException
+     */
     public void createPlayer() throws LineUnavailableException {
 //        File filePath = new File(getClass().getClassLoader().getResource("music/puzzle_theme.wav").toString());
 //        Media music = new Media(filePath.toURI().toString());
 //        player = new MediaPlayer(music);
-//        player.setOnEndOfMedia(() -> player.seek(Duration.ZERO));
+//       player.setOnEndOfMedia(() -> player.seek(Duration.ZERO));
     }
 
+    /**
+     *
+     */
     public void playMusic() {
 //        player.play();
     }
 
+    /**
+     *
+     */
     public void stopMusic() {
 //        player.stop();
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isPlayingMusic() {
 //        return player.getStatus() == MediaPlayer.Status.PLAYING;
         return false;
     }
 
+    /**
+     * Getter for the next level from the List levels
+     * @return  the level that the game needs to load next
+     */
     public Level getNextLevel() {
         if (currentLevel == null) {
             return levels.get(0);
@@ -233,10 +288,17 @@ public class StartMeUp {
         return null;
     }
 
+    /**
+     * Getter for the Current level
+     * @return  the current Level
+     */
     public Level getCurrentLevel() {
         return currentLevel;
     }
 
+    /**
+     *
+     */
     public void toggleDebug() {
         debug = !debug;
     }
