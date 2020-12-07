@@ -10,10 +10,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+/**
+ * Controls the interactions between the User and the Game, including implementing the menu options and movement.
+ */
 public class StartMeUp {
-
+    /**
+     * Defines a public String for the name of the Game as BestSokobanEverV6.
+     */
     public static final String GAME_NAME = "BestSokobanEverV6";
+    /**
+     * Creates a public object of the {@link GameLogger} class.
+     */
     public static GameLogger logger;
+
+
     private static boolean debug = false;
     private Level currentLevel;
     private String mapSetName;
@@ -237,8 +247,8 @@ public class StartMeUp {
     }
 
     /**
-     *
-     * @throws LineUnavailableException
+     * Defines a music Player to allow the game to play music when music is toggled on.
+     * @throws  LineUnavailableException    Thrown when the music file cannot be read, caught in {@link StartMeUp}
      */
     public void createPlayer() throws LineUnavailableException {
 //        File filePath = new File(getClass().getClassLoader().getResource("music/puzzle_theme.wav").toString());
@@ -248,22 +258,22 @@ public class StartMeUp {
     }
 
     /**
-     *
+     * Runs play on the player, starting the music.
      */
     public void playMusic() {
 //        player.play();
     }
 
     /**
-     *
+     * Runs stop on the player, stopping the music.
      */
     public void stopMusic() {
 //        player.stop();
     }
 
     /**
-     *
-     * @return
+     * Getter for the current status of the music Player.
+     * @return  Boolean - Not implemented
      */
     public boolean isPlayingMusic() {
 //        return player.getStatus() == MediaPlayer.Status.PLAYING;
@@ -297,7 +307,7 @@ public class StartMeUp {
     }
 
     /**
-     *
+     * Inverts the value of debug.
      */
     public void toggleDebug() {
         debug = !debug;

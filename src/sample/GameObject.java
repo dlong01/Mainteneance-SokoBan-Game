@@ -1,11 +1,29 @@
 package sample;
 
 public enum GameObject {
+    /**
+     * The barriers on the GameGrid, the player cannot pass through them.
+     */
     WALL('W'),
+    /**
+     * Null space in the game, the player cannot interact with it in any way.
+     */
     FLOOR(' '),
+    /**
+     * the object that the player can push around to try and reach the goal.
+     */
     CRATE('C'),
+    /**
+     * The target that the crate ust be placed on.
+     */
     DIAMOND('D'),
+    /**
+     * The player position.
+     */
     KEEPER('S'),
+    /**
+     * The crate having been placed on the correct location
+     */
     CRATE_ON_DIAMOND('O'),
     DEBUG_OBJECT('=');
 

@@ -3,6 +3,9 @@ package sample;
 import java.awt.*;
 import java.util.Iterator;
 
+/**
+ * Manages the GameGrid including locations and Getters for the values at given positions.
+ */
 public class GameGrid implements Iterable {
 
     final int COLUMNS;
@@ -34,8 +37,8 @@ public class GameGrid implements Iterable {
     }
 
     /**
-     *
-     * @return
+     * Gets the dimensions of the GameGrid by creating a new instance of Dimension
+     * @return  Dimension with COLUMNS and ROWS as the parameters
      */
     public Dimension getDimension() {
         return new Dimension(COLUMNS, ROWS);
@@ -84,9 +87,10 @@ public class GameGrid implements Iterable {
     }
 
     /**
-     *
-     * @param position
-     * @return
+     * Removes an object at a given position.
+     * @deprecated
+     * @param   position    Location of the object to be removed
+     * @return  Put a null object at the Position
      */
     public boolean removeGameObjectAt(Point position) {
         return putGameObjectAt(null, position);
@@ -169,17 +173,25 @@ public class GameGrid implements Iterable {
     }
 
     /**
-     * Constructor for a GridIterator
+     * Constructor for GridIterator. Implements Iterator.
      */
     public class GridIterator implements Iterator<GameObject> {
         int row = 0;
         int column = 0;
 
+        /**
+         * Overrides hasNext, Check method to see if there is a next row and column.
+         * @return  Boolean, Not (row == Total number of rows AND column == total number of columns)
+         */
         @Override
         public boolean hasNext() {
             return !(row == ROWS && column == COLUMNS);
         }
 
+        /**
+         * Overrides next() to get the next game object on the grid.
+         * @return  GameObject at the next position of the grid.
+         */
         @Override
         public GameObject next() {
             if (column >= COLUMNS) {

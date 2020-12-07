@@ -25,7 +25,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
-
+/**
+ * Handles the operations of the game by extending Application.
+ * Manages the stages and initializing the game.
+ */
 public class Main extends Application {
 
     private Stage primaryStage;
