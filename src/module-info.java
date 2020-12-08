@@ -1,3 +1,6 @@
+/**
+ * Module implementing a version of the classic Game Sokoban.
+ */
 module bestSokobanEverV6 {
     requires java.base;
     requires javafx.graphics;

@@ -6,7 +6,9 @@ import java.util.List;
 
 import static sample.GameGrid.translatePoint;
 
-
+/**
+ * Class to manage the Level and track teh GameObjects in it, implements Iterable to allow the grid to be easily iterated through.
+ */
 public final class Level implements Iterable<GameObject> {
 
     private final String name;
@@ -17,10 +19,10 @@ public final class Level implements Iterable<GameObject> {
     private Point keeperPosition = new Point(0, 0);
 
     /**
-     *
-     * @param levelName
-     * @param levelIndex
-     * @param raw_level
+     * Constructor for Level, defines the position of all objects in the level.
+     * @param   levelName   The name of the level
+     * @param   levelIndex  The number that the level is in the file of levels
+     * @param   raw_level   The list of Strings from the level file
      */
     public Level(String levelName, int levelIndex, List<String> raw_level) {
         if (StartMeUp.isDebugActive()) {
@@ -59,8 +61,8 @@ public final class Level implements Iterable<GameObject> {
     }
 
     /**
-     *
-     * @return
+     * Checks if the level has been completed
+     * @return  Boolean comparing cratedDiamondsCount to numberOfDiamonds
      */
     boolean isComplete() {
         int cratedDiamondsCount = 0;
@@ -76,63 +78,63 @@ public final class Level implements Iterable<GameObject> {
     }
 
     /**
-     *
-     * @return
+     * Getter for the name of the level
+     * @return  Level name
      */
     public String getName() {
         return name;
     }
 
     /**
-     *
-     * @return
+     * Getter for the index of the level
+     * @return  Level index
      */
     int getIndex() {
         return index;
     }
 
     /**
-     *
-     * @return
+     * Getter for the position of the player
+     * @return  keeperPosition, the point the player is at
      */
     Point getKeeperPosition() {
         return keeperPosition;
     }
 
     /**
-     *
-     * @param source
-     * @param delta
-     * @return
+     * Getter for the object the player is trying to move into
+     * @param   source  The players position
+     * @param   delta   The change in the players position
+     * @return  The GameObject that is being targeted, uses {@link GameGrid#getTargetFromSource(Point, Point)}
      */
     GameObject getTargetObject(Point source, Point delta) {
         return objectsGrid.getTargetFromSource(source, delta);
     }
 
     /**
-     *
-     * @param p
-     * @return
+     * Gets an object at a given point
+     * @param   p   Point to search
+     * @return  The GameObject at the Point p
      */
     GameObject getObjectAt(Point p) {
         return objectsGrid.getGameObjectAt(p);
     }
 
     /**
-     *
-     * @param object
-     * @param source
-     * @param delta
+     * Moves a given GameObject by a given amount from a given point
+     * @param   object  The object to be moved
+     * @param   source  The Point wheere the object is
+     * @param   delta   The amount to move the object by
      */
     void moveGameObjectBy(GameObject object, Point source, Point delta) {
         moveGameObjectTo(object, source, translatePoint(source, delta));
     }
 
     /**
-     *
-     * @param object
-     * @param source
-     * @param destination
+     * Moves a given GameObject to a given point
+     * @param   object      The GameObject to be moved
+     * @param   source      The point where the GameObject is
+     * @param   destination The point to move the GameObject to
      */
     public void moveGameObjectTo(GameObject object, Point source, Point destination) {
         objectsGrid.putGameObjectAt(getObjectAt(destination), source);
@@ -140,8 +142,8 @@ public final class Level implements Iterable<GameObject> {
     }
 
     /**
-     *
-     * @return
+     * Overrides the toString method so that it returns the whole of objectsGrid as strings
+     * @return  All values of objectsGrid as a String
      */
     @Override
     public String toString() {
@@ -149,8 +151,8 @@ public final class Level implements Iterable<GameObject> {
     }
 
     /**
-     *
-     * @return
+     * Overrides the Constructor for iterator to create LevelIterator
+     * @return  A new instance of LevelIterator
      */
     @Override
     public Iterator<GameObject> iterator() {
@@ -158,18 +160,27 @@ public final class Level implements Iterable<GameObject> {
     }
 
     /**
-     * 
+     * Implements Iterator to make an Iterator for the Level
      */
     public class LevelIterator implements Iterator<GameObject> {
 
         int column = 0;
         int row = 0;
 
+        /**
+         * Overrides hasNext to find out if there is a next value within the grid
+         * @return  Boolean of NOT if you are at the final row AND at the final column
+         */
         @Override
         public boolean hasNext() {
             return !(row == objectsGrid.ROWS - 1 && column == objectsGrid.COLUMNS);
         }
 
+        /**
+         * Overrides next with GameObject return type, finds the next object on the grid and returns the object.
+         * Checks to see if the object is a diamond with a crate on it by looking at the two objects separately.
+         * @return  GameObject of the next object on the grid
+         */
         @Override
         public GameObject next() {
             if (column >= objectsGrid.COLUMNS) {
@@ -196,6 +207,10 @@ public final class Level implements Iterable<GameObject> {
             return retObj;
         }
 
+        /**
+         * Getter for the current position of the iterator and returns a Point value
+         * @return  Point value of the current grid position
+         */
         public Point getCurrentPosition() {
             return new Point(column, row);
         }

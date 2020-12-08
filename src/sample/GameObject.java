@@ -1,5 +1,8 @@
 package sample;
 
+/**
+ * Represents the constants use in the Game file to show different parts of the level.
+ */
 public enum GameObject {
     /**
      * The barriers on the GameGrid, the player cannot pass through them.
@@ -25,22 +28,25 @@ public enum GameObject {
      * The crate having been placed on the correct location
      */
     CRATE_ON_DIAMOND('O'),
+    /**
+     * an object to assist with debugging
+     */
     DEBUG_OBJECT('=');
 
     private final char symbol;
 
     /**
-     *
-     * @param symbol
+     * Constructor for GameObject, stores the character from the grid in the field symbol.
+     * @param   symbol  Character from the grid
      */
     GameObject(final char symbol) {
         this.symbol = symbol;
     }
 
     /**
-     *
-     * @param c
-     * @return
+     * Finds the first instance of a given character among the symbol values of the GameObject objects.
+     * @param   c   Character to be found.
+     * @return  The GameObject that the symbol occurs in, if none is found it returns WALL.
      */
     public static GameObject fromChar(char c) {
         for (GameObject t : GameObject.values()) {
@@ -53,16 +59,16 @@ public enum GameObject {
     }
 
     /**
-     *
-     * @return
+     * Getter for the string value of symbol
+     * @return  String version of symbol
      */
     public String getStringSymbol() {
         return String.valueOf(symbol);
     }
 
     /**
-     *
-     * @return
+     * Getter for symbol
+     * @return  symbol
      */
     public char getCharSymbol() {
         return symbol;
