@@ -113,7 +113,7 @@ public class Main extends Application {
     void loadDefaultSaveFile(Stage primaryStage) {
         this.primaryStage = primaryStage;
         System.out.println("Hi");
-        InputStream in = getClass().getClassLoader().getResourceAsStream("sample/SampleGame.skb");
+        InputStream in = getClass().getClassLoader().getResourceAsStream("resources/SampleGame.skb");
         System.out.println(in);
         initializeGame(in);
         System.out.println("Hi");
