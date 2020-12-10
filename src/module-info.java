@@ -9,5 +9,6 @@ module bestSokobanEverV6 {
     requires javafx.media;
     requires java.desktop;
     requires java.logging;
-    opens sample;
+    opens game;
+    opens resources;
 }

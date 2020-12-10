@@ -1,7 +1,9 @@
 package game;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -10,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.effect.Effect;
 import javafx.scene.effect.MotionBlur;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -20,10 +23,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.awt.*;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.*;
 
 /**
  * Handles the operations of the game by extending Application.
@@ -54,16 +54,28 @@ public class Main extends Application {
      * @param   primaryStage    The main game stage
      */
     @Override
-    public void start(Stage primaryStage){
-/*
-        Parent root = FXMLLoader.load(getClass().getResource("GameView.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
-        primaryStage.show();
-*/
+    public void start(Stage primaryStage) {
+        try {
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("GameView.fxml"));
+            System.out.println("Hi");
+            BorderPane root = loader.load();
+            System.out.println("Hi");
+            primaryStage.setTitle("Hello World");
+            System.out.println("Hi");
+            primaryStage.setScene(new Scene(root));
+            System.out.println("Hi");
+            primaryStage.show();
+            /*loadDefaultSaveFile(primaryStage);*/
+        }
+
+        catch (IOException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
 
 
-        this.primaryStage = primaryStage;
+
+/*        this.primaryStage = primaryStage;
 
         MENU = new MenuBar();
 
@@ -103,7 +115,7 @@ public class Main extends Application {
         primaryStage.setTitle(StartMeUp.GAME_NAME);
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
-        loadDefaultSaveFile(primaryStage);
+        loadDefaultSaveFile(primaryStage);*/
     }
 
     /**
