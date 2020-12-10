@@ -1,4 +1,4 @@
-package sample;
+package game;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.Timeline;

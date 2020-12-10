@@ -27,4 +27,8 @@ hs_err_pid*
 /shelf/
 /workspace.xml
 /out/
+/index-files/
+/resources/
+/script-dir/
+
 
