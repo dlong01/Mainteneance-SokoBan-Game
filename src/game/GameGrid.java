@@ -1,4 +1,4 @@
-package sample;
+package game;
 
 import java.awt.*;
 import java.util.Iterator;

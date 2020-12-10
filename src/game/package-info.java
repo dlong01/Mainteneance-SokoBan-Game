@@ -1,4 +1,4 @@
 /**
- * Initial package provided by the base src provided to me
+ * Package for the actual game with Model, View and Controller
  */
-package sample;
+package game;

@@ -1,4 +1,4 @@
-package sample;
+package game;
 
 /**
  * Represents the constants use in the Game file to show different parts of the level.

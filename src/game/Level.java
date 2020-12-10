@@ -1,13 +1,13 @@
-package sample;
+package game;
 
 import java.awt.*;
 import java.util.Iterator;
 import java.util.List;
 
-import static sample.GameGrid.translatePoint;
+import static game.GameGrid.translatePoint;
 
 /**
- * Class to manage the Level and track teh GameObjects in it, implements Iterable to allow the grid to be easily iterated through.
+ * Class to manage the Level and track the GameObjects in it, implements Iterable to allow the grid to be easily iterated through.
  */
 public final class Level implements Iterable<GameObject> {
 

@@ -1,4 +1,4 @@
-package sample;
+package game;
 
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -56,7 +56,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage){
 /*
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("GameView.fxml"));
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
