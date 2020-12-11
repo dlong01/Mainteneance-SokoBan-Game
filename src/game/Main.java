@@ -35,7 +35,6 @@ public class Main extends Application {
     private StartMeUp gameEngine;
     private GridPane gameGrid;
     private File saveFile;
-    private MenuBar MENU;
 
     /**
      * The main method, calls launch from the application class.
@@ -57,19 +56,17 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("GameView.fxml"));
-            System.out.println("Hi");
             BorderPane root = loader.load();
-            System.out.println("Hi");
-            primaryStage.setTitle("Hello World");
-            System.out.println("Hi");
+
+            primaryStage.setTitle(StartMeUp.GAME_NAME);
             primaryStage.setScene(new Scene(root));
-            System.out.println("Hi");
             primaryStage.show();
-            /*loadDefaultSaveFile(primaryStage);*/
+            loadDefaultSaveFile(primaryStage);
         }
 
         catch (IOException e) {
             e.printStackTrace();
+            System.out.println("Damn i failed");
             System.exit(1);
         }
 
@@ -114,16 +111,16 @@ public class Main extends Application {
         root.add(gameGrid, 0, 1);
         primaryStage.setTitle(StartMeUp.GAME_NAME);
         primaryStage.setScene(new Scene(root));
-        primaryStage.show();
-        loadDefaultSaveFile(primaryStage);*/
+        primaryStage.show();*/
+
     }
 
     /**
      * Loads the default SampleGame.skb and initializes the game.
      * @param   primaryStage    The main game stage
      */
-    void loadDefaultSaveFile(Stage primaryStage) {
-        this.primaryStage = primaryStage;
+    /*void loadDefaultSaveFile(Stage primaryStage) {
+        //this.primaryStage = primaryStage;
         System.out.println("Hi");
         InputStream in = getClass().getClassLoader().getResourceAsStream("resources/SampleGame.skb");
         System.out.println(in);
@@ -131,7 +128,7 @@ public class Main extends Application {
         System.out.println("Hi");
         setEventFilter();
         System.out.println("Hi");
-    }
+    }*/
 
     /**
      * Initializes a new gameEngine with {@link StartMeUp}

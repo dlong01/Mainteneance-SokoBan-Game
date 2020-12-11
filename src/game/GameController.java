@@ -1,5 +1,6 @@
 package game;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 
@@ -31,5 +32,10 @@ public class GameController {
 
     @FXML
     private MenuItem aboutGame;
+
+    @FXML
+    void SaveGame(ActionEvent event) {
+        System.out.println("Save");
+    }
 
 }
