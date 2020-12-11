@@ -103,7 +103,11 @@ public class GameController {
 
     @FXML
     void ToggleMusic(ActionEvent event) {
-
+        if (gameEngine.isPlayingMusic() == false) {
+            gameEngine.playMusic();
+        } else{
+            gameEngine.stopMusic();
+        }
     }
 
     @FXML
@@ -121,7 +125,7 @@ public class GameController {
      * @param   input   The game file to initialize
      */
     public void initializeGame(InputStream input) {
-        gameEngine = new StartMeUp(input, true);
+        gameEngine = new StartMeUp(input, false);
         reloadGrid();
     }
 

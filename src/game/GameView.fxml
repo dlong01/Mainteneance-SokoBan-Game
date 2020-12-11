@@ -18,14 +18,14 @@
           <Menu mnemonicParsing="false" text="File">
             <items>
               <MenuItem fx:id="saveGame" mnemonicParsing="false" onAction="#SaveGame" text="Save Game" />
-                  <MenuItem fx:id="loadGame" mnemonicParsing="false" text="Load Game" />
-                  <MenuItem fx:id="exit" mnemonicParsing="false" text="Exit" />
+                  <MenuItem fx:id="loadGame" mnemonicParsing="false" onAction="#LoadGame" text="Load Game" />
+                  <MenuItem fx:id="exit" mnemonicParsing="false" onAction="#ExitGame" text="Exit" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Level">
             <items>
               <MenuItem fx:id="undo" mnemonicParsing="false" text="Undo" />
-                  <RadioMenuItem fx:id="musicToggle" mnemonicParsing="false" text="Toggle Music" />
+                  <RadioMenuItem fx:id="musicToggle" mnemonicParsing="false" onAction="#ToggleMusic" text="Toggle Music" />
                   <RadioMenuItem fx:id="debugToggle" mnemonicParsing="false" onAction="#ToggleDebug" text="Toggle Debug" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem fx:id="resetLevel" mnemonicParsing="false" text="Reset Level" />
@@ -33,7 +33,7 @@
           </Menu>
           <Menu mnemonicParsing="false" text="About">
             <items>
-              <MenuItem fx:id="aboutGame" mnemonicParsing="false" text="About this game" />
+              <MenuItem fx:id="aboutGame" mnemonicParsing="false" onAction="#ShowAbout" text="About this game" />
             </items>
           </Menu>
         </menus>

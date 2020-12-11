@@ -1,7 +1,9 @@
 package game;
 
 import javafx.scene.input.KeyCode;
+import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 
 import javax.sound.sampled.LineUnavailableException;
 import java.awt.*;
@@ -33,11 +35,11 @@ public class StartMeUp {
     private MediaPlayer player;
 
     /**
-     * Constructor for the game engine instanced in {@link Main#initializeGame(InputStream)}.
+     * Constructor for the game engine instanced in {@link GameController#initializeGame(InputStream)}.
      * Creates a new game logger, stores {@link StartMeUp#loadGameFile(InputStream)} in levels,
      * calls {@link StartMeUp#getNextLevel()} and stores the return value in the currentLevel variable.
      * @param input         The game file to be loaded
-     * @param production    Possibly a redundant parameter
+     * @param production    Allows testing without the music feature enabled
      */
     public StartMeUp(InputStream input, boolean production) {
         try {
@@ -251,24 +253,24 @@ public class StartMeUp {
      * @throws  LineUnavailableException    Thrown when the music file cannot be read, caught in {@link StartMeUp}
      */
     public void createPlayer() throws LineUnavailableException {
-//        File filePath = new File(getClass().getClassLoader().getResource("music/puzzle_theme.wav").toString());
-//        Media music = new Media(filePath.toURI().toString());
-//        player = new MediaPlayer(music);
-//       player.setOnEndOfMedia(() -> player.seek(Duration.ZERO));
+        File filePath = new File(StartMeUp.class.getResource("resources/puzzle_theme.wav").toString());
+        Media music = new Media(filePath.toURI().toString());
+        player = new MediaPlayer(music);
+        player.setOnEndOfMedia(() -> player.seek(Duration.ZERO));
     }
 
     /**
      * Runs play on the player, starting the music.
      */
     public void playMusic() {
-//        player.play();
+        player.play();
     }
 
     /**
      * Runs stop on the player, stopping the music.
      */
     public void stopMusic() {
-//        player.stop();
+        player.stop();
     }
 
     /**
@@ -276,8 +278,7 @@ public class StartMeUp {
      * @return  Boolean - Not implemented
      */
     public boolean isPlayingMusic() {
-//        return player.getStatus() == MediaPlayer.Status.PLAYING;
-        return false;
+        return player.getStatus() == MediaPlayer.Status.PLAYING;
     }
 
     /**
