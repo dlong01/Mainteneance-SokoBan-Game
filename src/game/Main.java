@@ -31,10 +31,10 @@ import java.io.*;
  */
 public class Main extends Application {
 
-    private Stage primaryStage;
+    /*private Stage primaryStage;
     private StartMeUp gameEngine;
     private GridPane gameGrid;
-    private File saveFile;
+    private File saveFile;*/
 
     /**
      * The main method, calls launch from the application class.
@@ -48,7 +48,7 @@ public class Main extends Application {
     /**
      * Defines the initial start conditions for the menus and the grid,
      * overrides the start method of application.
-     * This method uses the {@link #loadDefaultSaveFile}
+     * This method uses the {@link Load#loadDefaultSaveFile}
      * and {@link StartMeUp}
      * @param   primaryStage    The main game stage
      */
@@ -61,7 +61,11 @@ public class Main extends Application {
             primaryStage.setTitle(StartMeUp.GAME_NAME);
             primaryStage.setScene(new Scene(root));
             primaryStage.show();
-            loadDefaultSaveFile(primaryStage);
+
+            GameController controller = (GameController) loader.getController();
+
+            //Start a new game
+            controller.startNew(primaryStage);
         }
 
         catch (IOException e) {
@@ -136,28 +140,28 @@ public class Main extends Application {
      * Once the engine is initialized the grid is reloaded.
      * @param   input   The game file to initialize
      */
-    public void initializeGame(InputStream input) {
+   /* public void initializeGame(InputStream input) {
         gameEngine = new StartMeUp(input, true);
         reloadGrid();
-    }
+    }*/
 
     /**
      * Creates an event to detect a key press.
      * Upon key press {@link StartMeUp#handleKey} is called.
      */
-    public void setEventFilter() {
+   /* public void setEventFilter() {
         primaryStage.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             gameEngine.handleKey(event.getCode());
             reloadGrid();
         });
-    }
+    }*/
 
     /**
      * Opens file search with filters for a .<!-- -->skb extension,
      * loads chosen file using {@link #initializeGame}
      * @throws FileNotFoundException    Throws an exception which is caught by the {@link #loadGame()}
      */
-    public void loadGameFile() throws FileNotFoundException {
+    /*public void loadGameFile() throws FileNotFoundException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Save File");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Sokoban save file", "*.skb"));
@@ -169,13 +173,13 @@ public class Main extends Application {
             }
             initializeGame(new FileInputStream(saveFile));
         }
-    }
+    }*/
 
     /**
      * Checks if the game is completed, updates each of the positions on the grid.
      * Uses {@link #showVictoryMessage()}
      */
-    private void reloadGrid() {
+    /*private void reloadGrid() {
         if (gameEngine.isGameComplete()) {
             showVictoryMessage();
             return;
@@ -189,18 +193,18 @@ public class Main extends Application {
         }
         gameGrid.autosize();
         primaryStage.sizeToScene();
-    }
+    }*/
 
     /**
      * Displays a dialog box with the number of moves to complete the game.
      */
-    public void showVictoryMessage() {
+    /*public void showVictoryMessage() {
         String dialogTitle = "Game Over!";
         String dialogMessage = "You completed " + gameEngine.getMapSetName() + " in " + gameEngine.getMovesCount() + " moves!";
         MotionBlur mb = new MotionBlur(2, 3);
 
         newDialog(dialogTitle, dialogMessage, mb);
-    }
+    }*/
 
     /**
      * Creates a dialog box using the information from {@link  #showVictoryMessage()}
@@ -208,7 +212,7 @@ public class Main extends Application {
      * @param   dialogMessage       The message in the dialog box
      * @param   dialogMessageEffect The effect on the dialog box
      */
-    public void newDialog(String dialogTitle, String dialogMessage, Effect dialogMessageEffect) {
+    /*public void newDialog(String dialogTitle, String dialogMessage, Effect dialogMessageEffect) {
         final Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initOwner(primaryStage);
@@ -231,64 +235,64 @@ public class Main extends Application {
         Scene dialogScene = new Scene(dialogVbox, 350, 150);
         dialog.setScene(dialogScene);
         dialog.show();
-    }
+    }*/
 
     /**
      * Creates a new {@link  #showVictoryMessage()} at a position, with game object as the parameter.
      * @param   gameObject  The character at that position, defines whether it is a wall, air etc.
      * @param   location    The position the game object needs to be added in.
      */
-    public void addObjectToGrid(GameObject gameObject, Point location) {
+    /*public void addObjectToGrid(GameObject gameObject, Point location) {
         GraphicObject graphicObject = new GraphicObject(gameObject);
         gameGrid.add(graphicObject, location.y, location.x);
-    }
+    }*/
 
     /**
      * Ends the program when the exit menu option is chosen.
      */
-    public void closeGame() {
+    /*public void closeGame() {
         System.exit(0);
-    }
+    }*/
 
     /**
      * Saves the game when the save menu option is clicked.
      */
-    public void saveGame() {
-    }
+    /*public void saveGame() {
+    }*/
 
     /**
      * Runs the {@link  #loadGameFile()} method upon load menu option being selected.
      */
-    public void loadGame() {
+   /* public void loadGame() {
         try {
             loadGameFile();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     /**
      * Undoes the last move the player made
      */
-    public void undo() {
+    /*public void undo() {
         closeGame();
-    }
+    }*/
 
     /**
      * Resets the level to the starting state
      */
-    public void resetLevel() {
-    }
+    /*public void resetLevel() {
+    }*/
 
     /**
      *Displays a dialog box that contains information about the game.
      */
-    public void showAbout() {
+    /*public void showAbout() {
         String title = "About This Game";
         String message = "Enjoy the Game!\n";
 
         newDialog(title, message, null);
-    }
+    }*/
 
     /**
      * Allows the user to select whether of not they want music.
@@ -300,10 +304,10 @@ public class Main extends Application {
     /**
      * Enables debug mode which makes it easier to understand the games processes.
      */
-    public void toggleDebug() {
+    /*public void toggleDebug() {
         gameEngine.toggleDebug();
         reloadGrid();
-    }
+    }*/
 
 
 }

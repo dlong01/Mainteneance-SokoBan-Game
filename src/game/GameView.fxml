@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioMenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -10,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 
 
-<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.GameController">
+<BorderPane fx:id="bp" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.GameController">
    <top>
       <MenuBar maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
         <menus>
@@ -24,8 +25,8 @@
           <Menu mnemonicParsing="false" text="Level">
             <items>
               <MenuItem fx:id="undo" mnemonicParsing="false" text="Undo" />
-                  <MenuItem fx:id="musicToggle" mnemonicParsing="false" text="Toggle Music" />
-                  <MenuItem fx:id="debugToggle" mnemonicParsing="false" text="Toggle Debug" />
+                  <RadioMenuItem fx:id="musicToggle" mnemonicParsing="false" text="Toggle Music" />
+                  <RadioMenuItem fx:id="debugToggle" mnemonicParsing="false" onAction="#ToggleDebug" text="Toggle Debug" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem fx:id="resetLevel" mnemonicParsing="false" text="Reset Level" />
             </items>
