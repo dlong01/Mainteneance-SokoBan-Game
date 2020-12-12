@@ -56,7 +56,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("GameView.fxml"));
-            BorderPane root = loader.load();
+            VBox root = loader.load();
 
             primaryStage.setTitle(StartMeUp.GAME_NAME);
             primaryStage.setScene(new Scene(root));
