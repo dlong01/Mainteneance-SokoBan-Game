@@ -14,27 +14,32 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 class GraphicObject extends ImageView {
-    
+
     /**
      *
      * @param obj
      */
     GraphicObject(GameObject obj, int wallChoice, int floorChoice, Image[] sprites) throws FileNotFoundException {
-        InputStream spriteLocation = null;
+
         switch (obj) {
             case WALL:
+
                 switch (wallChoice) {
-                    case (0): {
+                    case 0: {
                         this.setImage(sprites[0]);
+                        break;
                     }
-                    case (1): {
+                    case 1: {
                         this.setImage(sprites[1]);
+                        break;
                     }
-                    case (2): {
+                    case 2: {
                         this.setImage(sprites[2]);
+                        break;
                     }
-                    case (3): {
+                    case 3: {
                         this.setImage(sprites[3]);
+                        break;
                     }
                 }
                 break;

@@ -32,20 +32,21 @@ public class GameController {
     private StartMeUp gameEngine;
     private File saveFile;
     private Image[] sprites = new Image[10];
+    private int[] spriteChoice = new int[2];
 
     public void loadSprites() {
         try {
             System.out.println("load called");
-            this.sprites[0] = new Image(new FileInputStream("src\\resources\\wall_black.png"));
-            this.sprites[1] = new Image(new FileInputStream("src\\resources\\wall_beige.png"));
-            this.sprites[2] = new Image(new FileInputStream("src\\resources\\wall_brown.png"));
-            this.sprites[3] = new Image(new FileInputStream("src\\resources\\wall_grey.png"));
-            this.sprites[4] = new Image(new FileInputStream("src\\resources\\crate.png"));
-            this.sprites[5] = new Image(new FileInputStream("src\\resources\\crate_finished.png"));
-            this.sprites[6] = new Image(new FileInputStream("src\\resources\\floor_stone.png"));
-            this.sprites[7] = new Image(new FileInputStream("src\\resources\\floor_sand.png"));
-            this.sprites[8] = new Image(new FileInputStream("src\\resources\\floor_grass.png"));
-            this.sprites[9] = new Image(new FileInputStream("src\\resources\\floor_dirt.png"));
+            this.sprites[0] = new Image(new FileInputStream("src/resources/wall_black.png"));
+            this.sprites[1] = new Image(new FileInputStream("src/resources/wall_beige.png"));
+            this.sprites[2] = new Image(new FileInputStream("src/resources/wall_brown.png"));
+            this.sprites[3] = new Image(new FileInputStream("src/resources/wall_grey.png"));
+            this.sprites[4] = new Image(new FileInputStream("src/resources/crate.png"));
+            this.sprites[5] = new Image(new FileInputStream("src/resources/crate_finished.png"));
+            this.sprites[6] = new Image(new FileInputStream("src/resources/floor_stone.png"));
+            this.sprites[7] = new Image(new FileInputStream("src/resources/floor_sand.png"));
+            this.sprites[8] = new Image(new FileInputStream("src/resources/floor_grass.png"));
+            this.sprites[9] = new Image(new FileInputStream("src/resources/floor_dirt.png"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             System.out.println("Failed loading sprites");
@@ -57,15 +58,16 @@ public class GameController {
      * Setter for the primaryStage field
      * @param   primaryStage    the Stage that the scene is on
      */
-    public void startNew (Stage primaryStage) {
+    public void startNew (Stage primaryStage, int wall, int floor) {
         loadSprites();
+        spriteChoice[0] = wall;
+        spriteChoice[1] = floor;
+
         this.primaryStage = primaryStage;
         InputStream in = Load.loadDefaultSaveFile();
-        System.out.println(in);
+
         initializeGame(in);
-        System.out.println("Hi");
         setEventFilter();
-        System.out.println("Hi");
     }
 
     public void startOld (Stage primaryStage) {
@@ -169,7 +171,6 @@ public class GameController {
      * Uses {@link #showVictoryMessage()}
      */
     private void reloadGrid() {
-        System.out.println("reloadGrid");
         if (gameEngine.isGameComplete()) {
             showVictoryMessage();
             return;
@@ -234,8 +235,7 @@ public class GameController {
      */
     public void addObjectToGrid(GameObject gameObject, Point location) {
         try {
-            System.out.println("addObjecttoGrid");
-            GraphicObject graphicObject = new GraphicObject(gameObject, 0, 0, sprites);
+            GraphicObject graphicObject = new GraphicObject(gameObject, spriteChoice[0], spriteChoice[1], sprites);
             gameGrid.add(graphicObject, location.y, location.x);
         } catch(FileNotFoundException e) {
             e.printStackTrace();
