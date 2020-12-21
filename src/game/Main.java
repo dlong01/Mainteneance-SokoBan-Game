@@ -62,7 +62,7 @@ public class Main extends Application {
             primaryStage.setScene(new Scene(root));
             primaryStage.show();
 
-            GameController controller = (GameController) loader.getController();
+            GameController controller = loader.getController();
 
             //Start a new game
             controller.startNew(primaryStage);

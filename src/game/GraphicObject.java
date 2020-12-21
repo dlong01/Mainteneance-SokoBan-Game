@@ -2,30 +2,49 @@ package game;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.Timeline;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
-class GraphicObject extends Rectangle {
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
+class GraphicObject extends ImageView {
+    
     /**
      *
      * @param obj
      */
-    GraphicObject(GameObject obj) {
-        Paint color;
+    GraphicObject(GameObject obj, int wallChoice, int floorChoice, Image[] sprites) throws FileNotFoundException {
+        InputStream spriteLocation = null;
         switch (obj) {
             case WALL:
-                color = Color.BLACK;
+                switch (wallChoice) {
+                    case (0): {
+                        this.setImage(sprites[0]);
+                    }
+                    case (1): {
+                        this.setImage(sprites[1]);
+                    }
+                    case (2): {
+                        this.setImage(sprites[2]);
+                    }
+                    case (3): {
+                        this.setImage(sprites[3]);
+                    }
+                }
                 break;
 
             case CRATE:
-                color = Color.ORANGE;
+                this.setImage(sprites[4]);
                 break;
 
             case DIAMOND:
-                color = Color.DEEPSKYBLUE;
+                this.setImage(sprites[4]);
 
                 // TODO: fix memory leak.
                 if (StartMeUp.isDebugActive()) {
@@ -40,16 +59,30 @@ class GraphicObject extends Rectangle {
                 break;
 
             case KEEPER:
-                color = Color.RED;
+                this.setImage(sprites[4]);
                 break;
 
             case FLOOR:
-                color = Color.WHITE;
+                switch (floorChoice) {
+                    case (0): {
+                        this.setImage(sprites[6]);
+                    }
+                    case (1): {
+                        this.setImage(sprites[7]);
+                    }
+                    case (2): {
+                        this.setImage(sprites[8]);
+                    }
+                    case (3): {
+                        this.setImage(sprites[9]);
+                    }
+                }
                 break;
 
             case CRATE_ON_DIAMOND:
-                color = Color.DARKCYAN;
+                this.setImage(sprites[5]);
                 break;
+
 
             default:
                 String message = "Error in Level constructor. Object not recognized.";
@@ -57,11 +90,10 @@ class GraphicObject extends Rectangle {
                 throw new AssertionError(message);
         }
 
-        this.setFill(color);
-        this.setHeight(30);
-        this.setWidth(30);
+        this.setFitHeight(32);
+        this.setFitWidth(32);
 
-        if (obj != GameObject.WALL) {
+        /*if (obj != GameObject.WALL) {
             this.setArcHeight(50);
             this.setArcWidth(50);
         }
@@ -69,7 +101,7 @@ class GraphicObject extends Rectangle {
         if (StartMeUp.isDebugActive()) {
             this.setStroke(Color.RED);
             this.setStrokeWidth(0.25);
-        }
+        }*/
     }
 
 }

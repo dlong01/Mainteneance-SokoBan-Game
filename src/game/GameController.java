@@ -16,6 +16,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
 
 import java.awt.*;
 import java.io.*;
@@ -30,12 +31,34 @@ public class GameController {
     private Stage primaryStage;
     private StartMeUp gameEngine;
     private File saveFile;
+    private Image[] sprites = new Image[10];
+
+    public void loadSprites() {
+        try {
+            System.out.println("load called");
+            this.sprites[0] = new Image(new FileInputStream("src\\resources\\wall_black.png"));
+            this.sprites[1] = new Image(new FileInputStream("src\\resources\\wall_beige.png"));
+            this.sprites[2] = new Image(new FileInputStream("src\\resources\\wall_brown.png"));
+            this.sprites[3] = new Image(new FileInputStream("src\\resources\\wall_grey.png"));
+            this.sprites[4] = new Image(new FileInputStream("src\\resources\\crate.png"));
+            this.sprites[5] = new Image(new FileInputStream("src\\resources\\crate_finished.png"));
+            this.sprites[6] = new Image(new FileInputStream("src\\resources\\floor_stone.png"));
+            this.sprites[7] = new Image(new FileInputStream("src\\resources\\floor_sand.png"));
+            this.sprites[8] = new Image(new FileInputStream("src\\resources\\floor_grass.png"));
+            this.sprites[9] = new Image(new FileInputStream("src\\resources\\floor_dirt.png"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("Failed loading sprites");
+            System.exit(1);
+        }
+    }
 
     /**
      * Setter for the primaryStage field
      * @param   primaryStage    the Stage that the scene is on
      */
     public void startNew (Stage primaryStage) {
+        loadSprites();
         this.primaryStage = primaryStage;
         InputStream in = Load.loadDefaultSaveFile();
         System.out.println(in);
@@ -46,6 +69,7 @@ public class GameController {
     }
 
     public void startOld (Stage primaryStage) {
+        loadSprites();
         this.primaryStage = primaryStage;
 
         try {
@@ -103,7 +127,7 @@ public class GameController {
 
     @FXML
     void ToggleMusic(ActionEvent event) {
-        if (gameEngine.isPlayingMusic() == false) {
+        if (!gameEngine.isPlayingMusic()) {
             gameEngine.playMusic();
         } else{
             gameEngine.stopMusic();
@@ -145,6 +169,7 @@ public class GameController {
      * Uses {@link #showVictoryMessage()}
      */
     private void reloadGrid() {
+        System.out.println("reloadGrid");
         if (gameEngine.isGameComplete()) {
             showVictoryMessage();
             return;
@@ -208,8 +233,15 @@ public class GameController {
      * @param   location    The position the game object needs to be added in.
      */
     public void addObjectToGrid(GameObject gameObject, Point location) {
-        GraphicObject graphicObject = new GraphicObject(gameObject);
-        gameGrid.add(graphicObject, location.y, location.x);
+        try {
+            System.out.println("addObjecttoGrid");
+            GraphicObject graphicObject = new GraphicObject(gameObject, 0, 0, sprites);
+            gameGrid.add(graphicObject, location.y, location.x);
+        } catch(FileNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("Error loading sprites");
+            System.exit(1);
+        }
     }
 
 
