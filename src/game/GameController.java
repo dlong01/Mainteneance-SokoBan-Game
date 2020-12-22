@@ -146,6 +146,11 @@ public class GameController {
         newDialog(title, message, null);
     }
 
+    @FXML
+    void ResetLevel(ActionEvent event) {
+
+    }
+
     /**
      * Initializes a new gameEngine with {@link StartMeUp}
      * using a .<!-- -->skb file as input.

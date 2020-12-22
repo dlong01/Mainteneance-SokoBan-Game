@@ -223,6 +223,8 @@ public class StartMeUp {
                     continue;
                 }
 
+                //if (line.contains("MoveCount") && )
+
                 line = line.trim();
                 line = line.toUpperCase();
                 // If the line contains at least 2 WALLS, add it to the list
@@ -253,7 +255,7 @@ public class StartMeUp {
      * @throws  LineUnavailableException    Thrown when the music file cannot be read, caught in {@link StartMeUp}
      */
     public void createPlayer() throws LineUnavailableException {
-        File filePath = new File(StartMeUp.class.getResource("resources/puzzle_theme.wav").toString());
+        File filePath = new File(StartMeUp.class.getResource("/resources/puzzle_theme.wav").toString());
         Media music = new Media(filePath.toURI().toString());
         player = new MediaPlayer(music);
         player.setOnEndOfMedia(() -> player.seek(Duration.ZERO));
@@ -292,7 +294,7 @@ public class StartMeUp {
 
         int currentLevelIndex = currentLevel.getIndex();
         if (currentLevelIndex < levels.size()) {
-            return levels.get(currentLevelIndex + 1);
+            return levels.get(currentLevelIndex);
         }
 
         gameComplete = true;
