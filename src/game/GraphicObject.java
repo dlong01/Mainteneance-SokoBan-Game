@@ -49,7 +49,7 @@ class GraphicObject extends ImageView {
                 break;
 
             case DIAMOND:
-                this.setImage(sprites[4]);
+                this.setImage(sprites[11]);
 
                 // TODO: fix memory leak.
                 if (StartMeUp.isDebugActive()) {
@@ -64,7 +64,7 @@ class GraphicObject extends ImageView {
                 break;
 
             case KEEPER:
-                this.setImage(sprites[4]);
+                this.setImage(sprites[10]);
                 break;
 
             case FLOOR:

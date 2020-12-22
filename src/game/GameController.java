@@ -31,22 +31,24 @@ public class GameController {
     private Stage primaryStage;
     private StartMeUp gameEngine;
     private File saveFile;
-    private Image[] sprites = new Image[10];
+    private Image[] sprites = new Image[12];
     private int[] spriteChoice = new int[2];
 
     public void loadSprites() {
         try {
             System.out.println("load called");
-            this.sprites[0] = new Image(new FileInputStream("src/resources/wall_black.png"));
-            this.sprites[1] = new Image(new FileInputStream("src/resources/wall_beige.png"));
-            this.sprites[2] = new Image(new FileInputStream("src/resources/wall_brown.png"));
-            this.sprites[3] = new Image(new FileInputStream("src/resources/wall_grey.png"));
-            this.sprites[4] = new Image(new FileInputStream("src/resources/crate.png"));
-            this.sprites[5] = new Image(new FileInputStream("src/resources/crate_finished.png"));
-            this.sprites[6] = new Image(new FileInputStream("src/resources/floor_stone.png"));
-            this.sprites[7] = new Image(new FileInputStream("src/resources/floor_sand.png"));
-            this.sprites[8] = new Image(new FileInputStream("src/resources/floor_grass.png"));
-            this.sprites[9] = new Image(new FileInputStream("src/resources/floor_dirt.png"));
+            this.sprites[0] = new Image(new FileInputStream("src/resources/images/wall_black.png"));
+            this.sprites[1] = new Image(new FileInputStream("src/resources/images/wall_beige.png"));
+            this.sprites[2] = new Image(new FileInputStream("src/resources/images/wall_brown.png"));
+            this.sprites[3] = new Image(new FileInputStream("src/resources/images/wall_grey.png"));
+            this.sprites[4] = new Image(new FileInputStream("src/resources/images/crate.png"));
+            this.sprites[5] = new Image(new FileInputStream("src/resources/images/crate_finished.png"));
+            this.sprites[6] = new Image(new FileInputStream("src/resources/images/floor_stone.png"));
+            this.sprites[7] = new Image(new FileInputStream("src/resources/images/floor_sand.png"));
+            this.sprites[8] = new Image(new FileInputStream("src/resources/images/floor_grass.png"));
+            this.sprites[9] = new Image(new FileInputStream("src/resources/images/floor_dirt.png"));
+            this.sprites[10] = new Image(new FileInputStream("src/resources/images/player.png"));
+            this.sprites[11] = new Image(new FileInputStream("src/resources/images/target.png"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             System.out.println("Failed loading sprites");

@@ -27,22 +27,22 @@
                      <children>
                         <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../resources/wall_black.png" />
+                              <Image url="@../resources/images/wall_black.png" />
                            </image>
                         </ImageView>
                         <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../resources/wall_beige.png" />
+                              <Image url="@../resources/images/wall_beige.png" />
                            </image>
                         </ImageView>
                         <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../resources/wall_brown.png" />
+                              <Image url="@../resources/images/wall_brown.png" />
                            </image>
                         </ImageView>
                         <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../resources/wall_grey.png" />
+                              <Image url="@../resources/images/wall_grey.png" />
                            </image>
                         </ImageView>
                      </children>
@@ -64,22 +64,22 @@
                      <children>
                         <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../resources/floor_stone.png" />
+                              <Image url="@../resources/images/floor_stone.png" />
                            </image>
                         </ImageView>
                         <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../resources/floor_sand.png" />
+                              <Image url="@../resources/images/floor_sand.png" />
                            </image>
                         </ImageView>
                         <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../resources/floor_grass.png" />
+                              <Image url="@../resources/images/floor_grass.png" />
                            </image>
                         </ImageView>
                         <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../resources/floor_dirt.png" />
+                              <Image url="@../resources/images/floor_dirt.png" />
                            </image>
                         </ImageView>
                      </children>
