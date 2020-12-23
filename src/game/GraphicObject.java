@@ -71,15 +71,19 @@ class GraphicObject extends ImageView {
                 switch (floorChoice) {
                     case (0): {
                         this.setImage(sprites[6]);
+                        break;
                     }
                     case (1): {
                         this.setImage(sprites[7]);
+                        break;
                     }
                     case (2): {
                         this.setImage(sprites[8]);
+                        break;
                     }
                     case (3): {
                         this.setImage(sprites[9]);
+                        break;
                     }
                 }
                 break;

@@ -2,6 +2,7 @@ package game;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
@@ -9,9 +10,7 @@ import javafx.scene.control.RadioMenuItem;
 import javafx.scene.effect.Effect;
 import javafx.scene.effect.MotionBlur;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
@@ -20,7 +19,8 @@ import javafx.scene.image.Image;
 
 import java.awt.*;
 import java.io.*;
-
+import java.util.List;
+import java.util.Scanner;
 
 
 /**
@@ -33,6 +33,7 @@ public class GameController {
     private File saveFile;
     private Image[] sprites = new Image[12];
     private int[] spriteChoice = new int[2];
+    static String saveName;
 
     public void loadSprites() {
         try {
@@ -72,8 +73,11 @@ public class GameController {
         setEventFilter();
     }
 
-    public void startOld (Stage primaryStage) {
+    public void startOld (Stage primaryStage, int wall, int floor) {
         loadSprites();
+        spriteChoice[0] = wall;
+        spriteChoice[1] = floor;
+
         this.primaryStage = primaryStage;
 
         try {
@@ -105,6 +109,26 @@ public class GameController {
 
     @FXML
     void SaveGame(ActionEvent event) {
+        List<Level> levels = gameEngine.levels;
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("SavePopupView.fxml"));
+            System.out.println(Main.class.getResource("SavePopupView.fxml"));
+            VBox root = loader.load();
+
+            final Stage savePopup = new Stage();
+
+            savePopup.setTitle("Best Sokoban Ever V6");
+            savePopup.setScene(new Scene(root));
+
+            savePopup.showAndWait();
+
+            writeFile(levels);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("unable to load SavePopupView");
+        }
+
         System.out.println("Save");
     }
 
@@ -250,6 +274,86 @@ public class GameController {
             System.exit(1);
         }
     }
+
+    private void writeFile(List<Level> levels) throws IOException {
+
+        File file = new File("src/resources/saves/"+saveName+".skb");
+        BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+
+        bw.write("MapSetName: " + gameEngine.getMapSetName());
+        bw.newLine();
+
+        for (Level level:levels) {
+
+            bw.write("LevelName: "+level.getName());
+            bw.newLine();
+
+            if (!level.getStatus()) {
+                bw.write("IsComplete: F");
+            } else {
+                bw.write("IsComplete: T");
+            }
+            bw.newLine();
+
+            bw.write("LevelMoves: "+level.getMoves());
+            bw.newLine();
+
+            GameGrid objectsGrid = level.getObjectsGrid();
+            GameGrid diamondsGrid = level.getDiamondsGrid();
+
+            GameGrid.GridIterator objectIterator = (GameGrid.GridIterator) objectsGrid.iterator();
+            GameGrid.GridIterator diamondIterator = (GameGrid.GridIterator) diamondsGrid.iterator();
+
+            int currentCol = 0;
+            while (objectIterator.hasNext()) {
+                if (currentCol >= 20) {
+                    bw.newLine();
+                    currentCol = 0;
+                }
+                GameObject curObj = objectIterator.next();
+                GameObject curDia = diamondIterator.next();
+                if (curDia == GameObject.DIAMOND) {
+                    if (curObj == GameObject.CRATE) {
+                        bw.write("O");
+                    } else {
+                        bw.write("D");
+                    }
+                    bw.flush();
+                    currentCol++;
+                    continue;
+                }
+
+                switch (curObj) {
+                    case WALL : {
+                        bw.write('W');
+                        break;
+                    }
+                    case FLOOR: {
+                        bw.write(' ');
+                        break;
+                    }
+                    case KEEPER: {
+                        bw.write('S');
+                        break;
+                    }
+                    case CRATE: {
+                        bw.write('C');
+                        break;
+                    }
+                }
+                bw.flush();
+                currentCol++;
+            }
+
+            bw.newLine();
+            bw.newLine();
+            bw.flush();
+        }
+
+        bw.close();
+        System.out.println("Data Entered in to the file successfully");
+    }
+
 
 
 }

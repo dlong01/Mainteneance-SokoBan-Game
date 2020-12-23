@@ -29,9 +29,8 @@ public class StartMeUp {
     private static boolean debug = false;
     private Level currentLevel;
     private String mapSetName;
-    private List<Level> levels;
+    List<Level> levels;
     private boolean gameComplete = false;
-    private int movesCount = 0;
     private MediaPlayer player;
 
     /**
@@ -72,7 +71,12 @@ public class StartMeUp {
      * @return  int value movesCount
      */
     public int getMovesCount() {
-        return movesCount;
+        int totalMoves = 0;
+        for (Level level:levels) {
+            totalMoves = +level.getMoves();
+        }
+
+        return  totalMoves;
     }
 
     /**
@@ -167,12 +171,12 @@ public class StartMeUp {
 
         if (keeperMoved) {
             keeperPosition.translate((int) delta.getX(), (int) delta.getY());
-            movesCount++;
+            currentLevel.incrementMoves();
             if (currentLevel.isComplete()) {
                 if (isDebugActive()) {
                     System.out.println("Level complete!");
                 }
-
+                currentLevel.toggleStatus();
                 currentLevel = getNextLevel();
             }
         }
@@ -192,6 +196,8 @@ public class StartMeUp {
             boolean parsedFirstLevel = false;
             List<String> rawLevel = new ArrayList<>();
             String levelName = "";
+            int levelMoves = 0;
+            boolean status = false;
 
             while (true) {
                 String line = reader.readLine();
@@ -199,20 +205,27 @@ public class StartMeUp {
                 // Break the loop if EOF is reached
                 if (line == null) {
                     if (rawLevel.size() != 0) {
-                        Level parsedLevel = new Level(levelName, ++levelIndex, rawLevel);
+                        Level parsedLevel = new Level(levelName, ++levelIndex, rawLevel, levelMoves, status);
                         levels.add(parsedLevel);
                     }
                     break;
                 }
+
 
                 if (line.contains("MapSetName")) {
                     mapSetName = line.replace("MapSetName: ", "");
                     continue;
                 }
 
+                //added to allow loading of move count for each level
+                if (line.contains("LevelMoves")) {
+                    levelMoves = Integer.parseInt(line.replace("LevelMoves: ", ""));
+                    System.out.println(levelMoves);
+                }
+
                 if (line.contains("LevelName")) {
                     if (parsedFirstLevel) {
-                        Level parsedLevel = new Level(levelName, ++levelIndex, rawLevel);
+                        Level parsedLevel = new Level(levelName, ++levelIndex, rawLevel, levelMoves, status);
                         levels.add(parsedLevel);
                         rawLevel.clear();
                     } else {
@@ -223,7 +236,14 @@ public class StartMeUp {
                     continue;
                 }
 
-                //if (line.contains("MoveCount") && )
+                if (line.contains("IsComplete")) {
+                    if (line.endsWith("T")) {
+                        status = true;
+                    } else {
+                        status = false;
+                    }
+                }
+
 
                 line = line.trim();
                 line = line.toUpperCase();
@@ -289,7 +309,15 @@ public class StartMeUp {
      */
     public Level getNextLevel() {
         if (currentLevel == null) {
-            return levels.get(0);
+            int i = 0;
+            while (levels.get(i).getStatus() == true) {
+                if (i == 4) {
+                    return levels.get(i);
+                }
+                i++;
+            }
+
+            return levels.get(i);
         }
 
         int currentLevelIndex = currentLevel.getIndex();
