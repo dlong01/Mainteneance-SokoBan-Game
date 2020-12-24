@@ -185,7 +185,7 @@ public class GameGrid implements Iterable {
          */
         @Override
         public boolean hasNext() {
-            return !(row == ROWS && column == COLUMNS);
+            return !(row == ROWS && column == COLUMNS-1);
         }
 
         /**
@@ -194,11 +194,11 @@ public class GameGrid implements Iterable {
          */
         @Override
         public GameObject next() {
-            if (column >= COLUMNS) {
-                column = 0;
-                row++;
+            if (row >= ROWS) {
+                column++;
+                row = 0;
             }
-            return getGameObjectAt(column++, row);
+            return getGameObjectAt(column, row++);
         }
     }
 }

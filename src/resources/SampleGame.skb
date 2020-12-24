@@ -1,8 +1,10 @@
 MapSetName: Example Game!
 LevelName: Simple Start
+IsComplete: F
+LevelMoves: 0
 WWWWWWWWWWWWWWWWWWWW
 W    W             W 
-W C  W D           W
+W  C W D           W
 w    w      WWWWWWWW 
 w    WWWW  WWWWWWWWW 
 w            WWWWWWW 
@@ -22,6 +24,8 @@ wWWWWWW   SWWWWWWWWW
 wwwwwwwwWwwwwwwwwwww
 
 LevelName: And Another Thing!
+IsComplete: F
+LevelMoves: 0
 WWWWWWWWWWWWWWWWWWWW
 W    W             W 
 W C  W C           W 
@@ -44,6 +48,8 @@ wWWWWWWWWW         W
 wwwwwwwwwwwwwwwwwwww
 
 LevelName: Here's another
+IsComplete: F
+LevelMoves: 0
 WWWWWWWWWWWWWWWWWWWW
 W    WWW  WWWWWWWWWW
 W                  W
@@ -66,6 +72,8 @@ W   WWW           DW
 WWWWWWWWWWWWWWWWWWWW
 
 LevelName: Penultimately...
+IsComplete: F
+LevelMoves: 0
 WWWWWWWWWWWWWWWWWWWW
 W  WWWD            W
 W  WWWWW WWWWWWWW WW
@@ -88,6 +96,8 @@ WD      WWWWWWWWWWWW
 WWWWWWWWWWWWWWWWWWWW
 
 LevelName: And finally :-)
+IsComplete: F
+LevelMoves: 0
 WWWWWWWWWWWWWWWWWWWW
 WWWWWWWWWWWWWWWW   W
 Wwwd       d      DW

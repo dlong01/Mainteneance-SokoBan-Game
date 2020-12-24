@@ -31,4 +31,8 @@ hs_err_pid*
 /resources/
 /script-dir/
 
+/saves/*
+# exception to the rule
+!/saves/.gitkeep
+
 

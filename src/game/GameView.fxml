@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-
 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.GameController">
    <children>
       <MenuBar maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="NEVER">
@@ -28,7 +27,7 @@
                   <RadioMenuItem fx:id="musicToggle" mnemonicParsing="false" onAction="#ToggleMusic" text="Toggle Music" />
                   <RadioMenuItem fx:id="debugToggle" mnemonicParsing="false" onAction="#ToggleDebug" text="Toggle Debug" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem fx:id="resetLevel" mnemonicParsing="false" text="Reset Level" />
+                  <MenuItem fx:id="resetLevel" mnemonicParsing="false" onAction="#ResetLevel" text="Reset Level" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="About">

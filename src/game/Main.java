@@ -2,27 +2,10 @@ package game;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.*;
-import javafx.scene.effect.Effect;
-import javafx.scene.effect.MotionBlur;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
-import javafx.stage.FileChooser;
-import javafx.stage.Modality;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.*;
 
 /**
@@ -55,22 +38,20 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("GameView.fxml"));
-            VBox root = loader.load();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("StartView.fxml"));
+            System.out.println(Main.class.getResource("StartView.fxml"));
+            AnchorPane root = loader.load();
+            /*FXMLLoader loader = new FXMLLoader(Main.class.getResource("GameView.fxml"));
+            VBox root = loader.load();*/
 
-            primaryStage.setTitle(StartMeUp.GAME_NAME);
+            primaryStage.setTitle("Best Sokoban Ever V6");
             primaryStage.setScene(new Scene(root));
             primaryStage.show();
-
-            GameController controller = (GameController) loader.getController();
-
-            //Start a new game
-            controller.startNew(primaryStage);
         }
 
         catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Damn i failed");
+            System.out.println("Fxml load failed");
             System.exit(1);
         }
 

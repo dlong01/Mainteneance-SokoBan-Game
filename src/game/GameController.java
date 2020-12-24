@@ -2,6 +2,7 @@ package game;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
@@ -9,17 +10,17 @@ import javafx.scene.control.RadioMenuItem;
 import javafx.scene.effect.Effect;
 import javafx.scene.effect.MotionBlur;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
 
 import java.awt.*;
 import java.io.*;
-
+import java.util.List;
+import java.util.Scanner;
 
 
 /**
@@ -30,22 +31,53 @@ public class GameController {
     private Stage primaryStage;
     private StartMeUp gameEngine;
     private File saveFile;
+    private Image[] sprites = new Image[12];
+    private int[] spriteChoice = new int[2];
+    static String saveName;
+
+    public void loadSprites() {
+        try {
+            System.out.println("load called");
+            this.sprites[0] = new Image(new FileInputStream("src/resources/images/wall_black.png"));
+            this.sprites[1] = new Image(new FileInputStream("src/resources/images/wall_beige.png"));
+            this.sprites[2] = new Image(new FileInputStream("src/resources/images/wall_brown.png"));
+            this.sprites[3] = new Image(new FileInputStream("src/resources/images/wall_grey.png"));
+            this.sprites[4] = new Image(new FileInputStream("src/resources/images/crate.png"));
+            this.sprites[5] = new Image(new FileInputStream("src/resources/images/crate_finished.png"));
+            this.sprites[6] = new Image(new FileInputStream("src/resources/images/floor_stone.png"));
+            this.sprites[7] = new Image(new FileInputStream("src/resources/images/floor_sand.png"));
+            this.sprites[8] = new Image(new FileInputStream("src/resources/images/floor_grass.png"));
+            this.sprites[9] = new Image(new FileInputStream("src/resources/images/floor_dirt.png"));
+            this.sprites[10] = new Image(new FileInputStream("src/resources/images/player.png"));
+            this.sprites[11] = new Image(new FileInputStream("src/resources/images/target.png"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("Failed loading sprites");
+            System.exit(1);
+        }
+    }
 
     /**
      * Setter for the primaryStage field
      * @param   primaryStage    the Stage that the scene is on
      */
-    public void startNew (Stage primaryStage) {
+    public void startNew (Stage primaryStage, int wall, int floor) {
+        loadSprites();
+        spriteChoice[0] = wall;
+        spriteChoice[1] = floor;
+
         this.primaryStage = primaryStage;
         InputStream in = Load.loadDefaultSaveFile();
-        System.out.println(in);
+
         initializeGame(in);
-        System.out.println("Hi");
         setEventFilter();
-        System.out.println("Hi");
     }
 
-    public void startOld (Stage primaryStage) {
+    public void startOld (Stage primaryStage, int wall, int floor) {
+        loadSprites();
+        spriteChoice[0] = wall;
+        spriteChoice[1] = floor;
+
         this.primaryStage = primaryStage;
 
         try {
@@ -77,6 +109,26 @@ public class GameController {
 
     @FXML
     void SaveGame(ActionEvent event) {
+        List<Level> levels = gameEngine.levels;
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("SavePopupView.fxml"));
+            System.out.println(Main.class.getResource("SavePopupView.fxml"));
+            VBox root = loader.load();
+
+            final Stage savePopup = new Stage();
+
+            savePopup.setTitle("Best Sokoban Ever V6");
+            savePopup.setScene(new Scene(root));
+
+            savePopup.showAndWait();
+
+            writeFile(levels);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("unable to load SavePopupView");
+        }
+
         System.out.println("Save");
     }
 
@@ -103,7 +155,7 @@ public class GameController {
 
     @FXML
     void ToggleMusic(ActionEvent event) {
-        if (gameEngine.isPlayingMusic() == false) {
+        if (!gameEngine.isPlayingMusic()) {
             gameEngine.playMusic();
         } else{
             gameEngine.stopMusic();
@@ -116,6 +168,11 @@ public class GameController {
         String message = "Enjoy the Game!\n";
 
         newDialog(title, message, null);
+    }
+
+    @FXML
+    void ResetLevel(ActionEvent event) {
+
     }
 
     /**
@@ -208,9 +265,95 @@ public class GameController {
      * @param   location    The position the game object needs to be added in.
      */
     public void addObjectToGrid(GameObject gameObject, Point location) {
-        GraphicObject graphicObject = new GraphicObject(gameObject);
-        gameGrid.add(graphicObject, location.y, location.x);
+        try {
+            GraphicObject graphicObject = new GraphicObject(gameObject, spriteChoice[0], spriteChoice[1], sprites);
+            gameGrid.add(graphicObject, location.y, location.x);
+        } catch(FileNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("Error loading sprites");
+            System.exit(1);
+        }
     }
+
+    private void writeFile(List<Level> levels) throws IOException {
+
+        File file = new File("src/resources/saves/"+saveName+".skb");
+        BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+
+        bw.write("MapSetName: " + gameEngine.getMapSetName());
+        bw.newLine();
+
+        for (Level level:levels) {
+
+            bw.write("LevelName: "+level.getName());
+            bw.newLine();
+
+            if (!level.getStatus()) {
+                bw.write("IsComplete: F");
+            } else {
+                bw.write("IsComplete: T");
+            }
+            bw.newLine();
+
+            bw.write("LevelMoves: "+level.getMoves());
+            bw.newLine();
+
+            GameGrid objectsGrid = level.getObjectsGrid();
+            GameGrid diamondsGrid = level.getDiamondsGrid();
+
+            GameGrid.GridIterator objectIterator = (GameGrid.GridIterator) objectsGrid.iterator();
+            GameGrid.GridIterator diamondIterator = (GameGrid.GridIterator) diamondsGrid.iterator();
+
+            int currentCol = 0;
+            while (objectIterator.hasNext()) {
+                if (currentCol >= 20) {
+                    bw.newLine();
+                    currentCol = 0;
+                }
+                GameObject curObj = objectIterator.next();
+                GameObject curDia = diamondIterator.next();
+                if (curDia == GameObject.DIAMOND) {
+                    if (curObj == GameObject.CRATE) {
+                        bw.write("O");
+                    } else {
+                        bw.write("D");
+                    }
+                    bw.flush();
+                    currentCol++;
+                    continue;
+                }
+
+                switch (curObj) {
+                    case WALL : {
+                        bw.write('W');
+                        break;
+                    }
+                    case FLOOR: {
+                        bw.write(' ');
+                        break;
+                    }
+                    case KEEPER: {
+                        bw.write('S');
+                        break;
+                    }
+                    case CRATE: {
+                        bw.write('C');
+                        break;
+                    }
+                }
+                bw.flush();
+                currentCol++;
+            }
+
+            bw.newLine();
+            bw.newLine();
+            bw.flush();
+        }
+
+        bw.close();
+        System.out.println("Data Entered in to the file successfully");
+    }
+
 
 
 }

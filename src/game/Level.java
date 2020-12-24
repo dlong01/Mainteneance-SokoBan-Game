@@ -17,6 +17,9 @@ public final class Level implements Iterable<GameObject> {
     private final int index;
     private int numberOfDiamonds = 0;
     private Point keeperPosition = new Point(0, 0);
+    private int moves;
+    private boolean status;
+    private List<String> rawLevel;
 
     /**
      * Constructor for Level, defines the position of all objects in the level.
@@ -24,27 +27,30 @@ public final class Level implements Iterable<GameObject> {
      * @param   levelIndex  The number that the level is in the file of levels
      * @param   raw_level   The list of Strings from the level file
      */
-    public Level(String levelName, int levelIndex, List<String> raw_level) {
+    public Level(String levelName, int levelIndex, List<String> raw_level, int levelMoves, boolean complete) {
         if (StartMeUp.isDebugActive()) {
             System.out.printf("[ADDING LEVEL] LEVEL [%d]: %s\n", levelIndex, levelName);
         }
 
         name = levelName;
         index = levelIndex;
+        moves = levelMoves;
+        status = complete;
+        rawLevel = raw_level;
 
-        int rows = raw_level.size();
-        int columns = raw_level.get(0).trim().length();
+        int rows = rawLevel.size();
+        int columns = rawLevel.get(0).trim().length();
 
         objectsGrid = new GameGrid(rows, columns);
         diamondsGrid = new GameGrid(rows, columns);
 
-        for (int row = 0; row < raw_level.size(); row++) {
+        for (int row = 0; row < rawLevel.size(); row++) {
 
             // Loop over the string one char at a time because it should be the fastest way:
             // http://stackoverflow.com/questions/8894258/fastest-way-to-iterate-over-all-the-chars-in-a-string
-            for (int col = 0; col < raw_level.get(row).length(); col++) {
+            for (int col = 0; col < rawLevel.get(row).length(); col++) {
                 // The game object is null when the we're adding a floor or a diamond
-                GameObject curTile = GameObject.fromChar(raw_level.get(row).charAt(col));
+                GameObject curTile = GameObject.fromChar(rawLevel.get(row).charAt(col));
 
                 if (curTile == GameObject.DIAMOND) {
                     numberOfDiamonds++;
@@ -77,12 +83,36 @@ public final class Level implements Iterable<GameObject> {
         return cratedDiamondsCount >= numberOfDiamonds;
     }
 
+    public void toggleStatus() {
+        this.status = true;
+    }
+
+    public GameGrid getObjectsGrid() {
+        return objectsGrid;
+    }
+
+    public GameGrid getDiamondsGrid() {
+        return diamondsGrid;
+    }
+
+    public List<String> getRawLevel() {
+        return rawLevel;
+    }
+
     /**
      * Getter for the name of the level
      * @return  Level name
      */
     public String getName() {
         return name;
+    }
+
+    public int getMoves() {
+        return moves;
+    }
+
+    public boolean getStatus() {
+        return status;
     }
 
     /**
@@ -118,6 +148,14 @@ public final class Level implements Iterable<GameObject> {
      */
     GameObject getObjectAt(Point p) {
         return objectsGrid.getGameObjectAt(p);
+    }
+
+    public void incrementMoves() {
+        this.moves++;
+    }
+
+    public void setMovesZero() {
+        this.moves = 0;
     }
 
     /**

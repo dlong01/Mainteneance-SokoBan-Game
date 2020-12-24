@@ -23,11 +23,6 @@ public class Load {
         InputStream in = Load.class.getClassLoader().getResourceAsStream("resources/SampleGame.skb");
 
         return in;
-        /*System.out.println(in);
-        initializeGame(in);
-        System.out.println("Hi");
-        setEventFilter();
-        System.out.println("Hi");*/
     }
 
     /**
