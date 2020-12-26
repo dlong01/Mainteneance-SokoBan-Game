@@ -206,6 +206,7 @@ public class GameController {
     private void reloadGrid() {
         if (gameEngine.isGameComplete()) {
             showVictoryMessage();
+            highScores(gameEngine.getMovesCount());
             return;
         }
 
@@ -369,10 +370,58 @@ public class GameController {
 
     }
 
-    public static void highScores(){
-        
+    public static void highScores(int totalScore){
+        List<Integer> scores = new ArrayList<>();
+        List<Integer> newScores = new ArrayList<>();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("src/resources/highScores.txt"));
+            int i = 1;
+            String line = null;
+            while((line = br.readLine()) !=null) {
+                System.out.println(i+". ");
+                line = line.replace(i+". ", "");
+                System.out.println(line);
+                Integer score = Integer.valueOf(line);
+                scores.add(score);
+                newScores.add(score);
+                i++;
+            }
+
+
+            for (Integer score : scores) {
+                if (totalScore <= score) {
+                    newScores.add(newScores.indexOf(score), totalScore);
+                    break;
+                }
+            }
+            System.out.println(newScores);
+
+            try{
+                newScores.remove(10);
+            } catch (IndexOutOfBoundsException e) {}
+            System.out.println(newScores);
+
+            writeHighScores(newScores);
+
+            br.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Unable to load high scores");
+        }
     }
 
+    private static void writeHighScores(List<Integer> scores) throws IOException {
+        BufferedWriter bw = new BufferedWriter(new FileWriter("src/resources/highScores.txt"));
+        int i = 1;
+        while (i != scores.size() + 1) {
+            bw.write(i+". "+scores.get(i-1));
+            bw.newLine();
+            i++;
+        }
+
+        bw.close();
+    }
 
 
 }
