@@ -19,6 +19,8 @@ import javafx.scene.image.Image;
 
 import java.awt.*;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -28,7 +30,7 @@ import java.util.Scanner;
  */
 public class GameController {
 
-    private Stage primaryStage;
+    private static Stage primaryStage;
     private StartMeUp gameEngine;
     private File saveFile;
     private Image[] sprites = new Image[12];
@@ -234,7 +236,7 @@ public class GameController {
      * @param   dialogMessage       The message in the dialog box
      * @param   dialogMessageEffect The effect on the dialog box
      */
-    public void newDialog(String dialogTitle, String dialogMessage, Effect dialogMessageEffect) {
+    public static void newDialog(String dialogTitle, String dialogMessage, Effect dialogMessageEffect) {
         final Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initOwner(primaryStage);
@@ -352,6 +354,23 @@ public class GameController {
 
         bw.close();
         System.out.println("Data Entered in to the file successfully");
+    }
+
+    public static void levelScoreBoard(List<Level> levelsList) {
+        StringBuilder highScores = new StringBuilder();
+
+        for (Level level : levelsList) {
+            if (level.isComplete()) {
+                highScores.append(level.getName()+": "+level.getMoves()+"\n");
+            }
+        }
+        newDialog("Scores so far", highScores.toString(), null);
+
+
+    }
+
+    public static void highScores(){
+        
     }
 
 
