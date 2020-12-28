@@ -177,6 +177,7 @@ public class StartMeUp {
                     System.out.println("Level complete!");
                 }
                 currentLevel.toggleStatus();
+                GameController.levelScoreBoard(levels);
                 currentLevel = getNextLevel();
             }
         }

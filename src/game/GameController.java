@@ -19,6 +19,8 @@ import javafx.scene.image.Image;
 
 import java.awt.*;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -28,7 +30,7 @@ import java.util.Scanner;
  */
 public class GameController {
 
-    private Stage primaryStage;
+    private static Stage primaryStage;
     private StartMeUp gameEngine;
     private File saveFile;
     private Image[] sprites = new Image[12];
@@ -204,6 +206,7 @@ public class GameController {
     private void reloadGrid() {
         if (gameEngine.isGameComplete()) {
             showVictoryMessage();
+            highScores(gameEngine.getMovesCount());
             return;
         }
 
@@ -234,7 +237,7 @@ public class GameController {
      * @param   dialogMessage       The message in the dialog box
      * @param   dialogMessageEffect The effect on the dialog box
      */
-    public void newDialog(String dialogTitle, String dialogMessage, Effect dialogMessageEffect) {
+    public static void newDialog(String dialogTitle, String dialogMessage, Effect dialogMessageEffect) {
         final Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initOwner(primaryStage);
@@ -354,6 +357,71 @@ public class GameController {
         System.out.println("Data Entered in to the file successfully");
     }
 
+    public static void levelScoreBoard(List<Level> levelsList) {
+        StringBuilder highScores = new StringBuilder();
+
+        for (Level level : levelsList) {
+            if (level.isComplete()) {
+                highScores.append(level.getName()+": "+level.getMoves()+"\n");
+            }
+        }
+        newDialog("Scores so far", highScores.toString(), null);
+
+
+    }
+
+    public static void highScores(int totalScore){
+        List<Integer> scores = new ArrayList<>();
+        List<Integer> newScores = new ArrayList<>();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("src/resources/highScores.txt"));
+            int i = 1;
+            String line = null;
+            while((line = br.readLine()) !=null) {
+                System.out.println(i+". ");
+                line = line.replace(i+". ", "");
+                System.out.println(line);
+                Integer score = Integer.valueOf(line);
+                scores.add(score);
+                newScores.add(score);
+                i++;
+            }
+
+
+            for (Integer score : scores) {
+                if (totalScore <= score) {
+                    newScores.add(newScores.indexOf(score), totalScore);
+                    break;
+                }
+            }
+            System.out.println(newScores);
+
+            try{
+                newScores.remove(10);
+            } catch (IndexOutOfBoundsException e) {}
+            System.out.println(newScores);
+
+            writeHighScores(newScores);
+
+            br.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Unable to load high scores");
+        }
+    }
+
+    private static void writeHighScores(List<Integer> scores) throws IOException {
+        BufferedWriter bw = new BufferedWriter(new FileWriter("src/resources/highScores.txt"));
+        int i = 1;
+        while (i != scores.size() + 1) {
+            bw.write(i+". "+scores.get(i-1));
+            bw.newLine();
+            i++;
+        }
+
+        bw.close();
+    }
 
 
 }
