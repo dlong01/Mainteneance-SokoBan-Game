@@ -11,8 +11,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Controller for StartView.fxml scene, manager for the start menu
+ */
 public class StartController {
-
 
     @FXML
     private Button startNew;

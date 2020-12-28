@@ -1,7 +1,7 @@
 package game;
 
 /**
- * Represents the constants use in the Game file to show different parts of the level.
+ * Represents the constants used in the Game file to show different parts of the level.
  */
 public enum GameObject {
     /**

@@ -26,6 +26,8 @@ public final class Level implements Iterable<GameObject> {
      * @param   levelName   The name of the level
      * @param   levelIndex  The number that the level is in the file of levels
      * @param   raw_level   The list of Strings from the level file
+     * @param   levelMoves  The number of moves made in the level
+     * @param   complete    The boolean value of if the level has been completed from the save file
      */
     public Level(String levelName, int levelIndex, List<String> raw_level, int levelMoves, boolean complete) {
         if (StartMeUp.isDebugActive()) {
@@ -66,20 +68,27 @@ public final class Level implements Iterable<GameObject> {
         }
     }
 
+    /**
+     * Toggles whether the level has been completed or not
+     */
     public void toggleStatus() {
         this.status = true;
     }
 
+    /**
+     * Getter for the objectsGrid field
+     * @return  GameGrid objectsGrid
+     */
     public GameGrid getObjectsGrid() {
         return objectsGrid;
     }
 
+    /**
+     * Getter for the diamondGrid field
+     * @return  GameGrid diamondsGrid
+     */
     public GameGrid getDiamondsGrid() {
         return diamondsGrid;
-    }
-
-    public List<String> getRawLevel() {
-        return rawLevel;
     }
 
     /**
@@ -90,10 +99,18 @@ public final class Level implements Iterable<GameObject> {
         return name;
     }
 
+    /**
+     * Getter for the number of moves made on that level
+     * @return  int moves
+     */
     public int getMoves() {
         return moves;
     }
 
+    /**
+     * Getter for the completion status of the level
+     * @return  boolean status
+     */
     public boolean getStatus() {
         return status;
     }
@@ -150,12 +167,11 @@ public final class Level implements Iterable<GameObject> {
         return cratedDiamondsCount >= numberOfDiamonds;
     }
 
+    /**
+     * increments th moves made on this level
+     */
     public void incrementMoves() {
         this.moves++;
-    }
-
-    public void setMovesZero() {
-        this.moves = 0;
     }
 
     /**

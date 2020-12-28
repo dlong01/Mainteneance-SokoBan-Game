@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 /**
- * Class to handle the m_logger for the game.
+ * Class to handle the logger for the game.
  */
 public class GameLogger extends Logger {
 

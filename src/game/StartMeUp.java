@@ -66,6 +66,10 @@ public class StartMeUp {
         return m_debug;
     }
 
+    /**
+     * Getter to retrieve the logger for the game
+     * @return  GameLogger m_logger
+     */
     public static GameLogger getLogger() {
         return m_logger;
     }
@@ -83,6 +87,10 @@ public class StartMeUp {
         return  totalMoves;
     }
 
+    /**
+     * Getter for the levels List
+     * @return  List levels hols type Level
+     */
     public List<Level> getLevels() {
         return levels;
     }
@@ -323,8 +331,9 @@ public class StartMeUp {
     }
 
     /**
-     * Defines a music Player to allow the game to play music when music is toggled on.
+     * NOT WORKING - Defines a music Player to allow the game to play music when music is toggled on.
      * @throws  LineUnavailableException    Thrown when the music file cannot be read, caught in {@link StartMeUp}
+     * @throws  MalformedURLException       Throws when the path for the audio file is formed improperly
      */
     public void createPlayer() throws LineUnavailableException, MalformedURLException {
         File filePath = new File(String.valueOf(StartMeUp.class.getResource("src\\resources\\puzzle_theme.wav")));

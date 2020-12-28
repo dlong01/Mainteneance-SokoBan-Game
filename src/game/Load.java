@@ -5,6 +5,9 @@ import javafx.stage.Stage;
 
 import java.io.*;
 
+/**
+ * Handles load methods for the {@link GameController}
+ */
 public class Load {
 
     /**
@@ -19,7 +22,9 @@ public class Load {
     /**
      * Opens file search with filters for a .<!-- -->skb extension,
      * loads chosen file using {@link GameController#initializeGame}
-     * @throws FileNotFoundException    Thrown when there is an error with retrieving the file
+     * @param   primaryStage    The stage to display the file selection popup on
+     * @return  File saveFile   The file selected by the user
+     * @throws  FileNotFoundException   Thrown when there is an error with retrieving the file
      */
     public static File fileSelect(Stage primaryStage) throws FileNotFoundException {
         FileChooser fileChooser = new FileChooser();
