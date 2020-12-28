@@ -51,7 +51,7 @@ public class StartController {
     GameController loadGameController(Stage primaryStage) {
         GameController controller = null;
         try {
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("GameView.fxml"));
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("views/GameView.fxml"));
             VBox root = loader.load();
 
             primaryStage.setTitle(StartMeUp.GAME_NAME);

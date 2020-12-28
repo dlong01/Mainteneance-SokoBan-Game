@@ -66,23 +66,6 @@ public final class Level implements Iterable<GameObject> {
         }
     }
 
-    /**
-     * Checks if the level has been completed
-     * @return  Boolean comparing cratedDiamondsCount to numberOfDiamonds
-     */
-    boolean isComplete() {
-        int cratedDiamondsCount = 0;
-        for (int row = 0; row < objectsGrid.ROWS; row++) {
-            for (int col = 0; col < objectsGrid.COLUMNS; col++) {
-                if (objectsGrid.getGameObjectAt(col, row) == GameObject.CRATE && diamondsGrid.getGameObjectAt(col, row) == GameObject.DIAMOND) {
-                    cratedDiamondsCount++;
-                }
-            }
-        }
-
-        return cratedDiamondsCount >= numberOfDiamonds;
-    }
-
     public void toggleStatus() {
         this.status = true;
     }
@@ -150,6 +133,23 @@ public final class Level implements Iterable<GameObject> {
         return objectsGrid.getGameObjectAt(p);
     }
 
+    /**
+     * Checks if the level has been completed
+     * @return  Boolean comparing cratedDiamondsCount to numberOfDiamonds
+     */
+    boolean isComplete() {
+        int cratedDiamondsCount = 0;
+        for (int row = 0; row < objectsGrid.ROWS; row++) {
+            for (int col = 0; col < objectsGrid.COLUMNS; col++) {
+                if (objectsGrid.getGameObjectAt(col, row) == GameObject.CRATE && diamondsGrid.getGameObjectAt(col, row) == GameObject.DIAMOND) {
+                    cratedDiamondsCount++;
+                }
+            }
+        }
+
+        return cratedDiamondsCount >= numberOfDiamonds;
+    }
+
     public void incrementMoves() {
         this.moves++;
     }
@@ -201,8 +201,16 @@ public final class Level implements Iterable<GameObject> {
      * Implements Iterator to make an Iterator for the Level
      */
     public class LevelIterator implements Iterator<GameObject> {
-
         int column = 0;
+
+        /**
+         * Getter for the current position of the iterator and returns a Point value
+         * @return  Point value of the current grid position
+         */
+        public Point getCurrentPosition() {
+            return new Point(column, row);
+        }
+
         int row = 0;
 
         /**
@@ -243,14 +251,6 @@ public final class Level implements Iterable<GameObject> {
             }
 
             return retObj;
-        }
-
-        /**
-         * Getter for the current position of the iterator and returns a Point value
-         * @return  Point value of the current grid position
-         */
-        public Point getCurrentPosition() {
-            return new Point(column, row);
         }
     }
 }

@@ -20,9 +20,7 @@ import javafx.scene.image.Image;
 import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Scanner;
 
 
 /**
@@ -30,12 +28,12 @@ import java.util.Scanner;
  */
 public class GameController {
 
-    private static Stage primaryStage;
+    private static Stage m_primaryStage;
     private StartMeUp gameEngine;
     private File saveFile;
     private Image[] sprites = new Image[12];
     private int[] spriteChoice = new int[2];
-    static String saveName;
+    static String m_saveName;
 
     public void loadSprites() {
         try {
@@ -60,7 +58,7 @@ public class GameController {
     }
 
     /**
-     * Setter for the primaryStage field
+     * Setter for the m_primaryStage field
      * @param   primaryStage    the Stage that the scene is on
      */
     public void startNew (Stage primaryStage, int wall, int floor) {
@@ -68,7 +66,7 @@ public class GameController {
         spriteChoice[0] = wall;
         spriteChoice[1] = floor;
 
-        this.primaryStage = primaryStage;
+        this.m_primaryStage = primaryStage;
         InputStream in = Load.loadDefaultSaveFile();
 
         initializeGame(in);
@@ -80,7 +78,7 @@ public class GameController {
         spriteChoice[0] = wall;
         spriteChoice[1] = floor;
 
-        this.primaryStage = primaryStage;
+        this.m_primaryStage = primaryStage;
 
         try {
             saveFile = Load.fileSelect(primaryStage);
@@ -111,10 +109,10 @@ public class GameController {
 
     @FXML
     void SaveGame(ActionEvent event) {
-        List<Level> levels = gameEngine.levels;
+        List<Level> levels = gameEngine.getLevels();
 
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("SavePopupView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("views/SavePopupView.fxml"));
             System.out.println(Main.class.getResource("SavePopupView.fxml"));
             VBox root = loader.load();
 
@@ -137,7 +135,7 @@ public class GameController {
     @FXML
     void LoadGame(ActionEvent event) {
         try {
-            saveFile = Load.fileSelect(primaryStage);
+            saveFile = Load.fileSelect(m_primaryStage);
             initializeGame(new FileInputStream(saveFile));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -174,7 +172,6 @@ public class GameController {
 
     @FXML
     void ResetLevel(ActionEvent event) {
-
     }
 
     /**
@@ -193,7 +190,7 @@ public class GameController {
      * Upon key press {@link StartMeUp#handleKey} is called.
      */
     public void setEventFilter() {
-        primaryStage.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+        m_primaryStage.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             gameEngine.handleKey(event.getCode());
             reloadGrid();
         });
@@ -217,7 +214,7 @@ public class GameController {
             addObjectToGrid(levelGridIterator.next(), levelGridIterator.getCurrentPosition());
         }
         gameGrid.autosize();
-        primaryStage.sizeToScene();
+        m_primaryStage.sizeToScene();
     }
 
     /**
@@ -240,7 +237,7 @@ public class GameController {
     public static void newDialog(String dialogTitle, String dialogMessage, Effect dialogMessageEffect) {
         final Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
-        dialog.initOwner(primaryStage);
+        dialog.initOwner(m_primaryStage);
         dialog.setResizable(false);
         dialog.setTitle(dialogTitle);
 
@@ -280,7 +277,7 @@ public class GameController {
 
     private void writeFile(List<Level> levels) throws IOException {
 
-        File file = new File("src/resources/saves/"+saveName+".skb");
+        File file = new File("src/resources/saves/"+ m_saveName +".skb");
         BufferedWriter bw = new BufferedWriter(new FileWriter(file));
 
         bw.write("MapSetName: " + gameEngine.getMapSetName());

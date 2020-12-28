@@ -1,20 +1,11 @@
 package game;
 
-import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Load {
-    private Stage primaryStage;
-    private StartMeUp gameEngine;
-    private GridPane gameGrid;
-    private File saveFile;
-    private String mapSetName;
 
     /**
      * Loads the default SampleGame.skb and initializes the game.
@@ -38,7 +29,7 @@ public class Load {
 
         if (saveFile != null) {
             if (StartMeUp.isDebugActive()) {
-                StartMeUp.logger.info("Loading save file: " + saveFile.getName());
+                StartMeUp.getLogger().info("Loading save file: " + saveFile.getName());
             }
             return saveFile;
         } else {

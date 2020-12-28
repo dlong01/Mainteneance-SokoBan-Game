@@ -4,14 +4,9 @@ import javafx.animation.FadeTransition;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
 
 class GraphicObject extends ImageView {
 
@@ -51,7 +46,6 @@ class GraphicObject extends ImageView {
             case DIAMOND:
                 this.setImage(sprites[11]);
 
-                // TODO: fix memory leak.
                 if (StartMeUp.isDebugActive()) {
                     FadeTransition ft = new FadeTransition(Duration.millis(1000), this);
                     ft.setFromValue(1.0);
@@ -95,22 +89,13 @@ class GraphicObject extends ImageView {
 
             default:
                 String message = "Error in Level constructor. Object not recognized.";
-                StartMeUp.logger.severe(message);
+                StartMeUp.getLogger().severe(message);
                 throw new AssertionError(message);
         }
 
         this.setFitHeight(32);
         this.setFitWidth(32);
 
-        /*if (obj != GameObject.WALL) {
-            this.setArcHeight(50);
-            this.setArcWidth(50);
-        }
-
-        if (StartMeUp.isDebugActive()) {
-            this.setStroke(Color.RED);
-            this.setStrokeWidth(0.25);
-        }*/
     }
 
 }

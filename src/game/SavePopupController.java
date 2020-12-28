@@ -18,7 +18,7 @@ public class SavePopupController {
     @FXML
     void saveButtonPressed(ActionEvent event) {
         fileName = saveNameInput.getText();
-        GameController.saveName = fileName;
+        GameController.m_saveName = fileName;
         Stage currentStage = (Stage) saveButton.getScene().getWindow();
         currentStage.close();
     }

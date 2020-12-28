@@ -8,6 +8,7 @@ import javafx.util.Duration;
 import javax.sound.sampled.LineUnavailableException;
 import java.awt.*;
 import java.io.*;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -23,26 +24,25 @@ public class StartMeUp {
     /**
      * Creates a public object of the {@link GameLogger} class.
      */
-    public static GameLogger logger;
+    private static GameLogger m_logger;
 
-
-    private static boolean debug = false;
+    private static boolean m_debug = false;
     private Level currentLevel;
     private String mapSetName;
-    List<Level> levels;
+    private List<Level> levels;
     private boolean gameComplete = false;
     private MediaPlayer player;
 
     /**
      * Constructor for the game engine instanced in {@link GameController#initializeGame(InputStream)}.
-     * Creates a new game logger, stores {@link StartMeUp#loadGameFile(InputStream)} in levels,
+     * Creates a new game m_logger, stores {@link StartMeUp#loadGameFile(InputStream)} in levels,
      * calls {@link StartMeUp#getNextLevel()} and stores the return value in the currentLevel variable.
      * @param input         The game file to be loaded
      * @param production    Allows testing without the music feature enabled
      */
     public StartMeUp(InputStream input, boolean production) {
         try {
-            logger = new GameLogger();
+            m_logger = new GameLogger();
             levels = loadGameFile(input);
             currentLevel = getNextLevel();
 
@@ -50,20 +50,24 @@ public class StartMeUp {
                 createPlayer();
             }
         } catch (IOException x) {
-            System.out.println("Cannot create logger.");
+            System.out.println("Cannot create m_logger.");
         } catch (NoSuchElementException e) {
-            logger.warning("Cannot load the default save file: " + e.getStackTrace());
+            m_logger.warning("Cannot load the default save file: " + e.getStackTrace());
         } catch (LineUnavailableException e) {
-            logger.warning("Cannot load the music file: " + e.getStackTrace());
+            m_logger.warning("Cannot load the music file: " + e.getStackTrace());
         }
     }
 
     /**
-     * Getter to retrieve the value of debug.
-     * @return  Boolean value debug
+     * Getter to retrieve the value of m_debug.
+     * @return  Boolean value m_debug
      */
     public static boolean isDebugActive() {
-        return debug;
+        return m_debug;
+    }
+
+    public static GameLogger getLogger() {
+        return m_logger;
     }
 
     /**
@@ -79,12 +83,67 @@ public class StartMeUp {
         return  totalMoves;
     }
 
+    public List<Level> getLevels() {
+        return levels;
+    }
+
+    /**
+     * Getter for the next level from the List levels
+     * @return  the level that the game needs to load next
+     */
+    public Level getNextLevel() {
+        if (currentLevel == null) {
+            int i = 0;
+            while (levels.get(i).getStatus() == true) {
+                if (i == 4) {
+                    return levels.get(i);
+                }
+                i++;
+            }
+
+            return levels.get(i);
+        }
+
+        int currentLevelIndex = currentLevel.getIndex();
+        if (currentLevelIndex < levels.size()) {
+
+            return levels.get(currentLevelIndex);
+        }
+
+        gameComplete = true;
+        return null;
+    }
+
+    /**
+     * Getter for the Current level
+     * @return  the current Level
+     */
+    public Level getCurrentLevel() {
+        return currentLevel;
+    }
+
     /**
      * Getter for the mapSetName variable.
      * @return  String value mapSetName
      */
     public String getMapSetName() {
         return mapSetName;
+    }
+
+    /**
+     * Getter for gameComplete.
+     * @return boolean value of gameComplete
+     */
+    public boolean isGameComplete() {
+        return gameComplete;
+    }
+
+    /**
+     * Getter for the current status of the music Player.
+     * @return  Boolean - Not implemented
+     */
+    public boolean isPlayingMusic() {
+        return player.getStatus() == MediaPlayer.Status.PLAYING;
     }
 
     /**
@@ -165,7 +224,7 @@ public class StartMeUp {
                 break;
 
             default:
-                logger.severe("The object to be moved was not a recognised GameObject.");
+                m_logger.severe("The object to be moved was not a recognised GameObject.");
                 throw new AssertionError("This should not have happened. Report this problem to the developer.");
         }
 
@@ -255,28 +314,20 @@ public class StartMeUp {
             }
 
         } catch (IOException e) {
-            logger.severe("Error trying to load the game file: " + e);
+            m_logger.severe("Error trying to load the game file: " + e);
         } catch (NullPointerException e) {
-            logger.severe("Cannot open the requested file: " + e);
+            m_logger.severe("Cannot open the requested file: " + e);
         }
 
         return levels;
     }
 
     /**
-     * Getter for gameComplete.
-     * @return boolean value of gameComplete
-     */
-    public boolean isGameComplete() {
-        return gameComplete;
-    }
-
-    /**
      * Defines a music Player to allow the game to play music when music is toggled on.
      * @throws  LineUnavailableException    Thrown when the music file cannot be read, caught in {@link StartMeUp}
      */
-    public void createPlayer() throws LineUnavailableException {
-        File filePath = new File(StartMeUp.class.getResource("/resources/puzzle_theme.wav").toString());
+    public void createPlayer() throws LineUnavailableException, MalformedURLException {
+        File filePath = new File(String.valueOf(StartMeUp.class.getResource("src\\resources\\puzzle_theme.wav")));
         Media music = new Media(filePath.toURI().toString());
         player = new MediaPlayer(music);
         player.setOnEndOfMedia(() -> player.seek(Duration.ZERO));
@@ -297,52 +348,10 @@ public class StartMeUp {
     }
 
     /**
-     * Getter for the current status of the music Player.
-     * @return  Boolean - Not implemented
-     */
-    public boolean isPlayingMusic() {
-        return player.getStatus() == MediaPlayer.Status.PLAYING;
-    }
-
-    /**
-     * Getter for the next level from the List levels
-     * @return  the level that the game needs to load next
-     */
-    public Level getNextLevel() {
-        if (currentLevel == null) {
-            int i = 0;
-            while (levels.get(i).getStatus() == true) {
-                if (i == 4) {
-                    return levels.get(i);
-                }
-                i++;
-            }
-
-            return levels.get(i);
-        }
-
-        int currentLevelIndex = currentLevel.getIndex();
-        if (currentLevelIndex < levels.size()) {
-            return levels.get(currentLevelIndex);
-        }
-
-        gameComplete = true;
-        return null;
-    }
-
-    /**
-     * Getter for the Current level
-     * @return  the current Level
-     */
-    public Level getCurrentLevel() {
-        return currentLevel;
-    }
-
-    /**
-     * Inverts the value of debug.
+     * Inverts the value of m_debug.
      */
     public void toggleDebug() {
-        debug = !debug;
+        m_debug = !m_debug;
     }
 
 }
