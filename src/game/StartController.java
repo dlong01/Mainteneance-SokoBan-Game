@@ -11,8 +11,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Controller for StartView.fxml scene, manager for the start menu
+ */
 public class StartController {
-
 
     @FXML
     private Button startNew;
@@ -51,7 +53,7 @@ public class StartController {
     GameController loadGameController(Stage primaryStage) {
         GameController controller = null;
         try {
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("GameView.fxml"));
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("views/GameView.fxml"));
             VBox root = loader.load();
 
             primaryStage.setTitle(StartMeUp.GAME_NAME);

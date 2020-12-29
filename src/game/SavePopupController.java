@@ -6,6 +6,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+/**
+ * Controller for the SavePopupView.fxml
+ */
 public class SavePopupController {
     String fileName;
 
@@ -18,7 +21,7 @@ public class SavePopupController {
     @FXML
     void saveButtonPressed(ActionEvent event) {
         fileName = saveNameInput.getText();
-        GameController.saveName = fileName;
+        GameController.m_saveName = fileName;
         Stage currentStage = (Stage) saveButton.getScene().getWindow();
         currentStage.close();
     }

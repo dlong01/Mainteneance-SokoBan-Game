@@ -1,7 +1,7 @@
 package game;
 
 /**
- * Represents the constants use in the Game file to show different parts of the level.
+ * Represents the constants used in the Game file to show different parts of the level.
  */
 public enum GameObject {
     /**
@@ -44,21 +44,6 @@ public enum GameObject {
     }
 
     /**
-     * Finds the first instance of a given character among the symbol values of the GameObject objects.
-     * @param   c   Character to be found.
-     * @return  The GameObject that the symbol occurs in, if none is found it returns WALL.
-     */
-    public static GameObject fromChar(char c) {
-        for (GameObject t : GameObject.values()) {
-            if (Character.toUpperCase(c) == t.symbol) {
-                return t;
-            }
-        }
-
-        return WALL;
-    }
-
-    /**
      * Getter for the string value of symbol
      * @return  String version of symbol
      */
@@ -72,5 +57,20 @@ public enum GameObject {
      */
     public char getCharSymbol() {
         return symbol;
+    }
+
+    /**
+     * Finds the first instance of a given character among the symbol values of the GameObject objects.
+     * @param   c   Character to be found.
+     * @return  The GameObject that the symbol occurs in, if none is found it returns WALL.
+     */
+    public static GameObject fromChar(char c) {
+        for (GameObject t : GameObject.values()) {
+            if (Character.toUpperCase(c) == t.symbol) {
+                return t;
+            }
+        }
+
+        return WALL;
     }
 }

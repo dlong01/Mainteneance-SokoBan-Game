@@ -25,18 +25,6 @@ public class GameGrid implements Iterable {
     }
 
     /**
-     * Applies a change to the location of a point.
-     * @param sourceLocation    Initial position of the point
-     * @param delta             Change in the value of the sourceLocation according to player input
-     * @return SourceLocation with the delta applied to it
-     */
-    static Point translatePoint(Point sourceLocation, Point delta) {
-        Point translatedPoint = new Point(sourceLocation);
-        translatedPoint.translate((int) delta.getX(), (int) delta.getY());
-        return translatedPoint;
-    }
-
-    /**
      * Gets the dimensions of the GameGrid by creating a new instance of Dimension
      * @return  Dimension with COLUMNS and ROWS as the parameters
      */
@@ -84,6 +72,18 @@ public class GameGrid implements Iterable {
         }
 
         return getGameObjectAt((int) p.getX(), (int) p.getY());
+    }
+
+    /**
+     * Applies a change to the location of a point.
+     * @param sourceLocation    Initial position of the point
+     * @param delta             Change in the value of the sourceLocation according to player input
+     * @return SourceLocation with the delta applied to it
+     */
+    static Point translatePoint(Point sourceLocation, Point delta) {
+        Point translatedPoint = new Point(sourceLocation);
+        translatedPoint.translate((int) delta.getX(), (int) delta.getY());
+        return translatedPoint;
     }
 
     /**

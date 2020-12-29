@@ -20,23 +20,43 @@ import javafx.scene.image.Image;
 import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Scanner;
 
 
 /**
- * Non-Implemented
+ * Controller for the GameView.fxml
  */
 public class GameController {
 
-    private static Stage primaryStage;
+    private static Stage m_primaryStage;
     private StartMeUp gameEngine;
     private File saveFile;
     private Image[] sprites = new Image[12];
     private int[] spriteChoice = new int[2];
-    static String saveName;
+    static String m_saveName;
 
+    @FXML
+    private GridPane gameGrid;
+    @FXML
+    private MenuItem saveGame;
+    @FXML
+    private MenuItem loadGame;
+    @FXML
+    private MenuItem exit;
+    @FXML
+    private MenuItem undo;
+    @FXML
+    private RadioMenuItem musicToggle;
+    @FXML
+    private RadioMenuItem debugToggle;
+    @FXML
+    private MenuItem resetLevel;
+    @FXML
+    private MenuItem aboutGame;
+
+    /**
+     * Loader for all sprites in the game
+     */
     public void loadSprites() {
         try {
             System.out.println("load called");
@@ -60,27 +80,35 @@ public class GameController {
     }
 
     /**
-     * Setter for the primaryStage field
+     * Starts a new game using the default save file
      * @param   primaryStage    the Stage that the scene is on
+     * @param   wall            int representing the wall sprite the user chose
+     * @param   floor           int representing the floor sprite the user chose
      */
     public void startNew (Stage primaryStage, int wall, int floor) {
         loadSprites();
         spriteChoice[0] = wall;
         spriteChoice[1] = floor;
 
-        this.primaryStage = primaryStage;
+        this.m_primaryStage = primaryStage;
         InputStream in = Load.loadDefaultSaveFile();
 
         initializeGame(in);
         setEventFilter();
     }
 
+    /**
+     * Starts a new game using a file chose by the user
+     * @param   primaryStage    the Stage that the scene is on
+     * @param   wall            int representing the wall sprite the user chose
+     * @param   floor           int representing the floor sprite the user chose
+     */
     public void startOld (Stage primaryStage, int wall, int floor) {
         loadSprites();
         spriteChoice[0] = wall;
         spriteChoice[1] = floor;
 
-        this.primaryStage = primaryStage;
+        this.m_primaryStage = primaryStage;
 
         try {
             saveFile = Load.fileSelect(primaryStage);
@@ -90,31 +118,16 @@ public class GameController {
         }
     }
 
-    @FXML
-    private GridPane gameGrid;
-    @FXML
-    private MenuItem saveGame;
-    @FXML
-    private MenuItem loadGame;
-    @FXML
-    private MenuItem exit;
-    @FXML
-    private MenuItem undo;
-    @FXML
-    private RadioMenuItem musicToggle;
-    @FXML
-    private RadioMenuItem debugToggle;
-    @FXML
-    private MenuItem resetLevel;
-    @FXML
-    private MenuItem aboutGame;
-
+    /**
+     * Handler for the save button menu item, loads the {@link SavePopupController}
+     * @param   event   Detects when the SaveGame button is selected
+     */
     @FXML
     void SaveGame(ActionEvent event) {
-        List<Level> levels = gameEngine.levels;
+        List<Level> levels = gameEngine.getLevels();
 
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("SavePopupView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("views/SavePopupView.fxml"));
             System.out.println(Main.class.getResource("SavePopupView.fxml"));
             VBox root = loader.load();
 
@@ -134,27 +147,43 @@ public class GameController {
         System.out.println("Save");
     }
 
+    /**
+     * Loads the file selected by the user in {@link Load#fileSelect(Stage)} when Load file is pressed in the menus
+     * @param   event   Detects when the LoadGame button is selected
+     */
     @FXML
     void LoadGame(ActionEvent event) {
         try {
-            saveFile = Load.fileSelect(primaryStage);
+            saveFile = Load.fileSelect(m_primaryStage);
             initializeGame(new FileInputStream(saveFile));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Exits the game when the exit game is pressed
+     * @param   event   Detects when the ExitGame menu option is selected
+     */
     @FXML
     void ExitGame(ActionEvent event) {
         System.exit(0);
     }
 
+    /**
+     * Toggles the debug option with {@link StartMeUp#toggleDebug()} when the menu option is selected
+     * @param   event   Detects when the toggleDebug menu option is selected
+     */
     @FXML
     void ToggleDebug(ActionEvent event) {
         gameEngine.toggleDebug();
         reloadGrid();
     }
 
+    /**
+     * NOT WORKING - Toggles the music player on when the option os selected
+     * @param   event   Detects when the toggleMusic menu option is selected
+     */
     @FXML
     void ToggleMusic(ActionEvent event) {
         if (!gameEngine.isPlayingMusic()) {
@@ -164,6 +193,10 @@ public class GameController {
         }
     }
 
+    /**
+     * Displays the about dialog box
+     * @param   event   Detects when the aboutGame menu option is selected
+     */
     @FXML
     void ShowAbout(ActionEvent event) {
         String title = "About This Game";
@@ -172,9 +205,12 @@ public class GameController {
         newDialog(title, message, null);
     }
 
+    /**
+     * NOT WORKING
+     * @param   event   Detects when the resetLevel menu option is selected
+     */
     @FXML
     void ResetLevel(ActionEvent event) {
-
     }
 
     /**
@@ -193,7 +229,7 @@ public class GameController {
      * Upon key press {@link StartMeUp#handleKey} is called.
      */
     public void setEventFilter() {
-        primaryStage.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+        m_primaryStage.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             gameEngine.handleKey(event.getCode());
             reloadGrid();
         });
@@ -217,7 +253,7 @@ public class GameController {
             addObjectToGrid(levelGridIterator.next(), levelGridIterator.getCurrentPosition());
         }
         gameGrid.autosize();
-        primaryStage.sizeToScene();
+        m_primaryStage.sizeToScene();
     }
 
     /**
@@ -240,7 +276,7 @@ public class GameController {
     public static void newDialog(String dialogTitle, String dialogMessage, Effect dialogMessageEffect) {
         final Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
-        dialog.initOwner(primaryStage);
+        dialog.initOwner(m_primaryStage);
         dialog.setResizable(false);
         dialog.setTitle(dialogTitle);
 
@@ -278,9 +314,14 @@ public class GameController {
         }
     }
 
+    /**
+     * Writes the Level data to an external save file
+     * @param   levels  List containing all the levels in the game
+     * @throws  IOException Error thrown by the buffered writer
+     */
     private void writeFile(List<Level> levels) throws IOException {
 
-        File file = new File("src/resources/saves/"+saveName+".skb");
+        File file = new File("src/resources/saves/"+ m_saveName +".skb");
         BufferedWriter bw = new BufferedWriter(new FileWriter(file));
 
         bw.write("MapSetName: " + gameEngine.getMapSetName());
@@ -357,6 +398,10 @@ public class GameController {
         System.out.println("Data Entered in to the file successfully");
     }
 
+    /**
+     * Creates a new dialog box containing all of the scores up until the point it is called
+     * @param   levelsList  List containing all of the levels in the game
+     */
     public static void levelScoreBoard(List<Level> levelsList) {
         StringBuilder highScores = new StringBuilder();
 
@@ -370,6 +415,11 @@ public class GameController {
 
     }
 
+    /**
+     * Creates a new buffered reader get high scores from an external file. 
+     * Inputs the players score into the Highscores list.
+     * @param   totalScore  The total score for the player in the current game
+     */
     public static void highScores(int totalScore){
         List<Integer> scores = new ArrayList<>();
         List<Integer> newScores = new ArrayList<>();
@@ -411,6 +461,11 @@ public class GameController {
         }
     }
 
+    /**
+     * Writes high scores to an external file
+     * @param   scores  list passed from {@link GameController#highScores(int)} containing the scores from the highscores file
+     * @throws  IOException Thrown when opening the highScores.txt file, caught in {@link GameController#highScores(int)}
+     */
     private static void writeHighScores(List<Integer> scores) throws IOException {
         BufferedWriter bw = new BufferedWriter(new FileWriter("src/resources/highScores.txt"));
         int i = 1;

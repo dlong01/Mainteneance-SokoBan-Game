@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+<?import game.StartController?>
 
 <AnchorPane prefHeight="750.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.StartController">
    <children>
@@ -27,22 +28,22 @@
                      <children>
                         <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../resources/images/wall_black.png" />
+                              <Image url="@../../resources/images/wall_black.png" />
                            </image>
                         </ImageView>
                         <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../resources/images/wall_beige.png" />
+                              <Image url="@../../resources/images/wall_beige.png" />
                            </image>
                         </ImageView>
                         <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../resources/images/wall_brown.png" />
+                              <Image url="@../../resources/images/wall_brown.png" />
                            </image>
                         </ImageView>
                         <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../resources/images/wall_grey.png" />
+                              <Image url="@../../resources/images/wall_grey.png" />
                            </image>
                         </ImageView>
                      </children>
@@ -64,22 +65,22 @@
                      <children>
                         <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../resources/images/floor_stone.png" />
+                              <Image url="@../../resources/images/floor_stone.png" />
                            </image>
                         </ImageView>
                         <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../resources/images/floor_sand.png" />
+                              <Image url="@../../resources/images/floor_sand.png" />
                            </image>
                         </ImageView>
                         <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../resources/images/floor_grass.png" />
+                              <Image url="@../../resources/images/floor_grass.png" />
                            </image>
                         </ImageView>
                         <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../resources/images/floor_dirt.png" />
+                              <Image url="@../../resources/images/floor_dirt.png" />
                            </image>
                         </ImageView>
                      </children>
