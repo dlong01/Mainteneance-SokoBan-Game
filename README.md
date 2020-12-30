@@ -22,7 +22,7 @@ Sokoban.
 JavaDocs have been implemented throughout to document the code and make it easier for a different developer to 
 understand the program.
 
-##Features implemented
+## Features implemented
 
 ### Sprites
 Sprites have been added to the game and start screen from the sprites sheet provided. They are selected by the
