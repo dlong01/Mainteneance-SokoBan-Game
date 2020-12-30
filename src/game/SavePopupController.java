@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
+ * @author Daniel Long
  * Controller for the SavePopupView.fxml
  */
 public class SavePopupController {

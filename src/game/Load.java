@@ -6,6 +6,7 @@ import javafx.stage.Stage;
 import java.io.*;
 
 /**
+ * @author Daniel Long
  * Handles load methods for the {@link GameController}
  */
 public class Load {

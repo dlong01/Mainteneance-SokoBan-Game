@@ -24,6 +24,7 @@ import java.util.List;
 
 
 /**
+ * @author Daniel Long
  * Controller for the GameView.fxml
  */
 public class GameController {
