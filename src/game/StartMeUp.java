@@ -50,7 +50,7 @@ public class StartMeUp {
                 createPlayer();
             }
         } catch (IOException x) {
-            System.out.println("Cannot create m_logger.");
+            System.out.printf("Cannot create m_logger.");
         } catch (NoSuchElementException e) {
             m_logger.warning("Cannot load the default save file: " + e.getStackTrace());
         } catch (LineUnavailableException e) {
@@ -288,7 +288,6 @@ public class StartMeUp {
                 //added to allow loading of move count for each level
                 if (line.contains("LevelMoves")) {
                     levelMoves = Integer.parseInt(line.replace("LevelMoves: ", ""));
-                    System.out.println(levelMoves);
                 }
 
                 if (line.contains("LevelName")) {

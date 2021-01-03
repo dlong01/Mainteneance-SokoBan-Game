@@ -60,7 +60,6 @@ public class GameController {
      */
     public void loadSprites() {
         try {
-            System.out.println("load called");
             this.sprites[0] = new Image(new FileInputStream("src/resources/images/wall_black.png"));
             this.sprites[1] = new Image(new FileInputStream("src/resources/images/wall_beige.png"));
             this.sprites[2] = new Image(new FileInputStream("src/resources/images/wall_brown.png"));
@@ -75,7 +74,7 @@ public class GameController {
             this.sprites[11] = new Image(new FileInputStream("src/resources/images/target.png"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            System.out.println("Failed loading sprites");
+            System.out.printf("Failed loading sprites");
             System.exit(1);
         }
     }
@@ -129,7 +128,6 @@ public class GameController {
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("views/SavePopupView.fxml"));
-            System.out.println(Main.class.getResource("SavePopupView.fxml"));
             VBox root = loader.load();
 
             final Stage savePopup = new Stage();
@@ -142,10 +140,9 @@ public class GameController {
             writeFile(levels);
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("unable to load SavePopupView");
+            System.out.printf("unable to load SavePopupView");
         }
 
-        System.out.println("Save");
     }
 
     /**
@@ -310,7 +307,7 @@ public class GameController {
             gameGrid.add(graphicObject, location.y, location.x);
         } catch(FileNotFoundException e) {
             e.printStackTrace();
-            System.out.println("Error loading sprites");
+            System.out.printf("Error loading sprites");
             System.exit(1);
         }
     }
@@ -396,7 +393,6 @@ public class GameController {
         }
 
         bw.close();
-        System.out.println("Data Entered in to the file successfully");
     }
 
     /**
@@ -429,9 +425,7 @@ public class GameController {
             int i = 1;
             String line = null;
             while((line = br.readLine()) !=null) {
-                System.out.println(i+". ");
                 line = line.replace(i+". ", "");
-                System.out.println(line);
                 Integer score = Integer.valueOf(line);
                 scores.add(score);
                 newScores.add(score);
@@ -445,12 +439,11 @@ public class GameController {
                     break;
                 }
             }
-            System.out.println(newScores);
 
             try{
                 newScores.remove(10);
             } catch (IndexOutOfBoundsException e) {}
-            System.out.println(newScores);
+
 
             writeHighScores(newScores);
 
@@ -458,7 +451,7 @@ public class GameController {
 
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Unable to load high scores");
+            System.out.printf("Unable to load high scores");
         }
     }
 

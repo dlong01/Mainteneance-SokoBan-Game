@@ -59,12 +59,11 @@ public class StartController {
             primaryStage.setTitle(StartMeUp.GAME_NAME);
             primaryStage.setScene(new Scene(root));
             primaryStage.show();
-            System.out.println(wallSlider.getValue());
             controller = loader.getController();
 
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Failed loading GameController");
+            System.out.printf("Failed loading GameController");
             System.exit(1);
         }
         return controller;
