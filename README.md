@@ -1,4 +1,6 @@
-# Daniel Long - psydl2
+# Daniel Long
+
+*This project involved refactoring and extending an existing codebase as part of a Coursework project*
 
 *To run program, load project in Intellij and run Main*
 
